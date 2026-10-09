@@ -43,7 +43,7 @@ import { NgFor } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  atleti = ['Alessio', 'Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Paolo', 'Sara', 'Sara M.', 'Sonia'];
+  atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela',' Paolo', 'Sara D.', 'Sara M.', 'Sonia'];
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   saving = false;
