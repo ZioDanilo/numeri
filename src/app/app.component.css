@@ -265,3 +265,28 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   color: #101b2b; font-size: clamp(11px, 1.15vw, 16px);
   font-weight: 800; line-height: 1.15;
 }
+
+/* Fascia superiore del fronte: stessa tinta dell'intestazione tabella Maglie. */
+.players-panel .shirt-front { overflow: hidden; }
+.players-panel .shirt-front .front-player-name {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 101;
+  top: 2px;
+  left: 2px;
+  width: calc(100% - 4px);
+  height: 10%;
+  transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border-bottom: 1px solid #b8944e;
+  border-radius: 7px 7px 0 0;
+  background: rgba(172,131,58,.16);
+  color: #101b2b;
+  font-size: clamp(9px, .9vw, 13px);
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
