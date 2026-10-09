@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, NgFor],
+  imports: [NgFor],
   template: `
     <main class="page">
       <header class="site-header">
@@ -17,19 +16,19 @@ import { NgFor } from '@angular/common';
       </header>
       <section class="selectors" aria-label="Scelta maglie">
         <label>Atleta
-          <select [(ngModel)]="atleta" name="atleta">
+          <select name="atleta">
             <option value="" disabled>Seleziona atleta</option>
             <option *ngFor="let nome of atleti; let i = index" [value]="i">{{ nome }}</option>
           </select>
         </label>
         <label>Numero
-          <select [(ngModel)]="numero" name="numero">
+          <select name="numero">
             <option value="" disabled>Seleziona numero</option>
             <option *ngFor="let n of numeri" [value]="n">{{ n }}</option>
           </select>
         </label>
         <label>Taglia
-          <select [(ngModel)]="taglia" name="taglia">
+          <select name="taglia">
             <option value="" disabled>Seleziona taglia</option>
             <option *ngFor="let t of taglie" [value]="t">{{ t }}</option>
           </select>
