@@ -1,0 +1,8 @@
+{
+  "name": "numeri",
+  "compatibility_date": "2026-10-09",
+  "assets": {
+    "directory": "./dist/numeri-virtus-26-27/browser",
+    "not_found_handling": "single-page-application"
+  }
+}
