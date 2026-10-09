@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 
-interface MagliaVirtus {
+interface Giocatore {
   id: number;
   atleta: string;
-  numero: number;
-  taglia: string;
+  numero: number | null;
+  taglia: string | null;
+  ruolo: string | null;
 }
 
 @Component({
@@ -98,7 +99,7 @@ interface MagliaVirtus {
           <table>
             <thead><tr><th>Numero</th><th>Atleta</th><th>Taglia</th><th aria-label="Elimina"></th></tr></thead>
             <tbody>
-              <tr *ngFor="let maglia of maglie">
+              <tr *ngFor="let maglia of maglieAssegnate">
                 <td>{{ maglia.numero }}</td>
                 <td>{{ maglia.atleta }}</td>
                 <td>{{ maglia.taglia }}</td>
@@ -114,7 +115,7 @@ interface MagliaVirtus {
                   </button>
                 </td>
               </tr>
-              <tr *ngIf="maglie.length === 0"><td colspan="4">Nessuna maglia assegnata</td></tr>
+              <tr *ngIf="maglieAssegnate.length === 0"><td colspan="4">Nessuna maglia assegnata</td></tr>
             </tbody>
           </table>
         </div>
@@ -138,7 +139,7 @@ export class AppComponent implements OnInit {
   }
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-  maglie: MagliaVirtus[] = [];
+  maglie: Giocatore[] = [];
   loading = true;
   loadError = '';
   atletaScelto = '';
@@ -152,13 +153,15 @@ export class AppComponent implements OnInit {
     ? 'http://localhost:3000/api'
     : 'https://investment-lab-service.onrender.com/api';
 
+  get maglieAssegnate(): Giocatore[] { return this.maglie.filter(m => m.numero !== null); }
+
   get atletiDisponibili(): string[] {
-    const assegnati = new Set(this.maglie.map(m => m.atleta.trim()));
+    const assegnati = new Set(this.maglie.filter(m => m.numero !== null).map(m => m.atleta.trim()));
     return this.atleti.filter(nome => !assegnati.has(nome));
   }
 
   get numeriDisponibili(): number[] {
-    const assegnati = new Set(this.maglie.map(m => m.numero));
+    const assegnati = new Set(this.maglie.filter(m => m.numero !== null).map(m => m.numero));
     return this.numeri.filter(numero => !assegnati.has(numero));
   }
 
@@ -168,11 +171,11 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.loadError = '';
     try {
-      const response = await fetch(this.baseUrl + '/maglie-virtus', { cache: 'no-store' });
+      const response = await fetch(this.baseUrl + '/giocatori', { cache: 'no-store' });
       if (!response.ok) throw new Error('HTTP ' + response.status);
       const data: unknown = await response.json();
       if (!Array.isArray(data)) throw new Error('Risposta non valida');
-      this.maglie = (data as MagliaVirtus[]).sort((a, b) => a.numero - b.numero);
+      this.maglie = (data as Giocatore[]).sort((a, b) => (a.numero ?? 999) - (b.numero ?? 999));
     } catch {
       this.loadError = 'Impossibile caricare le maglie dal database.';
     } finally {
@@ -191,7 +194,7 @@ export class AppComponent implements OnInit {
     this.saving = true;
     this.messaggio = '';
     try {
-      const response = await fetch(this.baseUrl + '/maglie-virtus', {
+      const response = await fetch(this.baseUrl + '/giocatori', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ atleta, numero, taglia })
@@ -214,13 +217,13 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async elimina(maglia: MagliaVirtus): Promise<void> {
+  async elimina(maglia: Giocatore): Promise<void> {
     if (this.deletingId !== null) return;
     if (!confirm('Eliminare la maglia di ' + maglia.atleta + ' (n. ' + maglia.numero + ')?')) return;
     this.deletingId = maglia.id;
     this.messaggio = '';
     try {
-      const response = await fetch(this.baseUrl + '/maglie-virtus/' + maglia.id, { method: 'DELETE' });
+      const response = await fetch(this.baseUrl + '/giocatori/' + maglia.id, { method: 'DELETE' });
       if (!response.ok) throw new Error('Cancellazione non riuscita.');
       await this.caricaMaglie();
       this.messaggio = this.loadError || 'Maglia eliminata.';
