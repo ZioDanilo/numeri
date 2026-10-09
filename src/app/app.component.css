@@ -316,14 +316,4 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   background: rgba(255,255,255,.72);
 }
 
-/* Ritaglio delle divise del libero: elimina l'alone grigio-azzurro
-   nelle aree esterne alla sagoma, senza alterare i colori della maglia. */
-.players-panel .shirt-face img.libero-kit {
-  clip-path: polygon(
-    39% 0%, 61% 0%, 67% 3%, 78% 8%, 94% 17%, 100% 29%,
-    98% 33%, 80% 36%, 76% 39%, 76% 56%, 79% 62%, 82% 70%, 90% 94%,
-    88% 97%, 55% 99%, 50% 84%, 45% 99%, 12% 97%,
-    10% 94%, 18% 70%, 21% 62%, 24% 56%, 24% 39%, 20% 36%, 2% 33%,
-    0% 29%, 6% 17%, 22% 8%, 33% 3%
-  );
-}
+
