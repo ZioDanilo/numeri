@@ -57,7 +57,7 @@ interface MagliaVirtus {
         </p>
         <div *ngIf="!loading && !loadError" class="table-scroll">
           <table>
-            <thead><tr><th>Numero</th><th>Atleta</th><th>Taglia</th><th>Azioni</th></tr></thead>
+            <thead><tr><th>Numero</th><th>Atleta</th><th>Taglia</th><th aria-label="Elimina"></th></tr></thead>
             <tbody>
               <tr *ngFor="let maglia of maglie">
                 <td>{{ maglia.numero }}</td>
