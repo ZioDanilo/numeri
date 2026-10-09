@@ -35,13 +35,23 @@ interface MagliaVirtus {
           <img src="assets/Squadra.png" alt="Foto della squadra Virtus Volley Versilia">
         </div>
       </section>
-      <section *ngIf="pagina === 'giocatori'" class="home-landing players-landing" aria-label="Giocatori">
+      <section *ngIf="pagina === 'giocatori'" class="home-landing players-section" aria-label="Giocatori">
         <div class="home-panel players-panel">
           <div class="players-grid">
-            <div class="player-card" *ngFor="let nome of atleti">
-              <img class="player-shirt" src="assets/Maglia_fronte.png" alt="Maglia Virtus Volley Versilia">
-              <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
-              <span class="player-name">{{ nome }}</span>
+            <div class="player-card" *ngFor="let nome of atleti" tabindex="0" [attr.aria-label]="'Maglia di ' + nome + (numeroGiocatore(nome) !== null ? ', numero ' + numeroGiocatore(nome) : '')">
+              <div class="shirt-flipper">
+                <div class="shirt-face shirt-front">
+                  <img src="assets/Maglia_fronte.png" alt="Maglia fronte">
+                  <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                  <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                </div>
+                <div class="shirt-face shirt-back">
+                  <img src="assets/Maglia_retro.png" alt="Maglia retro">
+                  <span class="player-name">{{ nome }}</span>
+                  <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                  <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -124,9 +134,8 @@ export class AppComponent implements OnInit {
 
   atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela', 'Paolo', 'Sara D.', 'Sara M.', 'Sonia', 'Vale'];
   numeroGiocatore(nome: string): number | null {
-    return this.maglie.find(m => m.atleta === nome)?.numero ?? null;
+    return this.maglie.find(m => m.atleta.trim() === nome)?.numero ?? null;
   }
-
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   maglie: MagliaVirtus[] = [];

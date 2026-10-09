@@ -166,3 +166,39 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 /* Home: la card si adatta alla foto intera, senza tagli o deformazioni. */
 .home-panel.squad-photo-card { width: fit-content; max-width: 100%; padding: 0; overflow: hidden; line-height: 0; }
 .squad-photo-card img { display: block; width: auto; height: auto; max-width: 100%; object-fit: contain; border-radius: inherit; }
+
+/* Giocatori: contenitore largo quanto la navbar, sei maglie per riga. */
+.players-section { padding-left: 0; padding-right: 0; }
+.home-panel.players-panel { width: 60%; max-width: none; padding: clamp(10px, 1.5vw, 22px); }
+.players-panel .players-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 0; }
+.players-panel .player-card { position: relative; min-width: 0; padding: 0; overflow: visible; border: 0; background: transparent; box-shadow: none; }
+.players-panel .player-card img { display: block; width: 100%; height: auto; }
+.players-panel .player-name { position: absolute; z-index: 100; top: 3%; left: 0; width: 100%; text-align: center; font-size: clamp(10px, 1.1vw, 15px); font-weight: 800; color: #09265a; text-shadow: 0 1px 3px white, 0 -1px 3px white; }
+.players-panel .player-number { position: absolute; z-index: 100; top: 43%; left: 50%; transform: translate(-50%, -50%); color: #09265a; -webkit-text-stroke: 1px #d4aa46; font-size: clamp(17px, 2.5vw, 38px); font-weight: 900; line-height: 1; text-shadow: 0 1px 2px #fff; }
+@media (max-width: 768px) {
+  .home-panel.players-panel { width: 100%; padding: 12px; }
+  .players-panel .players-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .players-panel .player-name { font-size: 12px; }
+  .players-panel .player-number { font-size: clamp(19px, 5vw, 32px); }
+}
+@media (max-width: 420px) {
+  .players-panel .players-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Flip 3D: fronte a riposo, retro finché hover o focus. */
+.players-panel .player-card { perspective: 1000px; cursor: pointer; }
+.players-panel .shirt-flipper { position: relative; width: 100%; transform-style: preserve-3d; transition: transform .65s ease; }
+.players-panel .player-card:hover .shirt-flipper,
+.players-panel .player-card:focus .shirt-flipper,
+.players-panel .player-card:focus-within .shirt-flipper { transform: rotateY(180deg); }
+.players-panel .shirt-face { position: relative; width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-style: flat; }
+.players-panel .shirt-front { transform: rotateY(0deg); }
+.players-panel .shirt-back { position: absolute; inset: 0; transform: rotateY(180deg); }
+.players-panel .shirt-face img { display: block; width: 100%; height: auto; }
+.players-panel .shirt-back .player-name { top: 7%; }
+.players-panel .shorts-number { position: absolute; z-index: 100; top: 85%; left: 75%; transform: translate(-50%,-50%); color: white; font-size: clamp(11px, 1.5vw, 22px); font-weight: 900; line-height: 1; text-shadow: 0 1px 2px #09265a; }
+@media (max-width: 768px) { .players-panel .shorts-number { font-size: clamp(14px, 3vw, 22px); } }
+
+/* Retro: numero maglia nella parte bianca; numero pantaloncini sul lato opposto. */
+.players-panel .shirt-back .player-number { top: 30%; }
+.players-panel .shirt-back .shorts-number { left: 37%; top: 85%; }
