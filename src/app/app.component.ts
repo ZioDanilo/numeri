@@ -14,13 +14,36 @@ interface MagliaVirtus {
   imports: [NgFor, NgIf],
   template: `
     <main class="page">
+      <nav class="main-nav" aria-label="Navigazione principale">
+        <button class="menu-toggle" type="button" [attr.aria-expanded]="menuAperto" aria-controls="nav-links" aria-label="Apri o chiudi menu" (click)="menuAperto = !menuAperto"><span></span><span></span><span></span></button>
+        <div id="nav-links" class="nav-links" [class.open]="menuAperto">
+          <button type="button" [class.active]="pagina === 'home'" (click)="vaiA('home')">Home</button>
+          <button type="button" [class.active]="pagina === 'maglie'" (click)="vaiA('maglie')">Maglie</button>
+          <button type="button" [class.active]="pagina === 'risultati'" (click)="vaiA('risultati')">Risultati</button>
+        </div>
+      </nav>
       <header class="site-header">
         <img class="club-logo" src="assets/Logo.png?v=20261009-2" alt="Logo Virtus Volley Versilia">
         <div class="heading">
           <h1>Virtus Volley Versilia</h1>
-          <p>Scelta maglie</p>
+          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : 'La nostra squadra' }}</p>
         </div>
       </header>
+      <section *ngIf="pagina === 'home'" class="home-landing" aria-label="Benvenuti">
+        <div class="home-panel">
+          <span class="home-eyebrow">PASSIONE · SQUADRA · PALLAVOLO</span>
+          <h2>Benvenuti nella Virtus Volley Versilia</h2>
+          <p>Una squadra, la voglia di giocare insieme e la passione per la pallavolo. Questo è il nostro spazio: scopri le maglie e segui la squadra.</p>
+          <div class="home-actions">
+            <button type="button" (click)="vaiA('maglie')">Scopri le maglie</button>
+            <button type="button" class="secondary" (click)="vaiA('risultati')">Risultati</button>
+          </div>
+        </div>
+      </section>
+      <section *ngIf="pagina === 'risultati'" class="home-landing" aria-label="Risultati">
+        <div class="home-panel"><span class="home-eyebrow">VIRTUS VOLLEY VERSILIA</span><h2>Risultati</h2><p>Qui troverai i risultati delle partite della squadra. La sezione è in preparazione.</p></div>
+      </section>
+      <ng-container *ngIf="pagina === 'maglie'">
       <section class="selectors" aria-label="Scelta maglie">
         <label>Atleta
           <select name="atleta" #atletaSelect (change)="atletaScelto = atletaSelect.value" [disabled]="loading || !!loadError">
@@ -80,11 +103,19 @@ interface MagliaVirtus {
           </table>
         </div>
       </section>
+      </ng-container>
     </main>
   `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  pagina: 'home' | 'maglie' | 'risultati' = 'home';
+  menuAperto = false;
+  vaiA(pagina: 'home' | 'maglie' | 'risultati'): void {
+    this.pagina = pagina;
+    this.menuAperto = false;
+  }
+
   atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela', 'Paolo', 'Sara D.', 'Sara M.', 'Sonia', 'Vale'];
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
