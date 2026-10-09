@@ -3,17 +3,17 @@
   box-sizing: border-box;
   min-height: 220vh;
   padding: clamp(48px, 8vh, 100px) 20px 50px;
-  background-color: #101925;
-  background-image: url('/assets/volley-background.svg');
-  background-size: 100% 100%;
-  background-position: top center;
+  background-color: #e8e6e1;
+  background-image: url('/assets/volley-background.png'), url('/assets/volley-background.svg');
   background-repeat: no-repeat;
-  color: #f8f4ea;
+  background-position: center top;
+  background-size: cover;
+  color: #141414;
   text-align: center;
 }
-h1 { margin: 0; font: 800 clamp(2rem, 5vw, 5rem)/1.12 Arial, sans-serif; letter-spacing: -.035em; text-shadow: 0 3px 25px #000a; }
-h1 span { color: #e1ba73; }
+h1 { margin: 0; font: 800 clamp(2rem, 5vw, 5rem)/1.12 Arial, sans-serif; letter-spacing: -.035em; text-shadow: 0 2px 16px #fff9; }
+h1 span { color: #96702c; }
 @media (max-width: 600px) {
-  .page { min-height: 250vh; padding-top: 65px; background-size: 100% 100%; }
+  .page { min-height: 220vh; padding-top: 65px; background-position: center top; }
   h1 { font-size: clamp(2rem, 9vw, 3rem); }
 }
