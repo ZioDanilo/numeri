@@ -32,7 +32,7 @@ interface MagliaVirtus {
       </header>
       <section *ngIf="pagina === 'home'" class="home-landing" aria-label="Benvenuti">
         <div class="home-panel squad-photo-card">
-          <img src="assets/Squdra.png" alt="Foto della squadra Virtus Volley Versilia">
+          <img src="assets/Squadra.png" alt="Foto della squadra Virtus Volley Versilia">
         </div>
       </section>
       <section *ngIf="pagina === 'giocatori'" class="home-landing" aria-label="Giocatori">
