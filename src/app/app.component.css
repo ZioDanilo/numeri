@@ -40,7 +40,7 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 .results { max-width: 900px; margin: 26px auto 0; text-align: center; font-family: Arial, sans-serif; }
 .results h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); margin: 0 0 14px; }
 .table-scroll { width: 100%; overflow-x: auto; border-radius: 10px; }
-.results table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,.92); }
+.results table { width: 100%; border-collapse: collapse; background: transparent; }
 .results th, .results td { border: 1px solid #b8944e; padding: 12px 14px; text-align: center; }
 .results th { background: rgba(172,131,58,.16); font-weight: 700; }
 .results .action-cell { padding: 0; width: 86px; }
@@ -54,3 +54,6 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .results .action-cell { width: 52px; }
   .delete-button { min-height: 43px; }
 }
+
+/* Righe dati completamente trasparenti; intestazione invariata */
+.results tbody, .results tbody tr, .results tbody td { background: transparent; }
