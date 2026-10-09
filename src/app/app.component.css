@@ -126,3 +126,28 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .selectors label { min-width: 0; max-width: none; width: 100%; flex: none; }
   .selectors select { min-width: 0; width: 100%; padding: 8px 5px; font-size: 14px; }
 }
+
+/* Navigazione e landing page Virtus */
+.main-nav { position: relative; z-index: 10; display: flex; justify-content: flex-end; max-width: 1200px; margin: 0 auto 16px; }
+.nav-links { display: flex; gap: 8px; padding: 6px; border: 1px solid rgba(185,148,78,.35); border-radius: 14px; background: rgba(255,255,255,.88); backdrop-filter: blur(12px); }
+.nav-links button { border: 0; background: transparent; color: #09265a; font: 700 15px Arial,sans-serif; border-radius: 9px; padding: 12px 22px; cursor: pointer; }
+.nav-links button:hover, .nav-links button.active { background: #0a285b; color: #fff; }
+.menu-toggle { display: none; }
+.home-landing { display: flex; justify-content: center; align-items: flex-start; min-height: 55vh; padding: clamp(30px,8vh,100px) 12px 30px; }
+.home-panel { box-sizing: border-box; width: min(720px,100%); padding: clamp(26px,5vw,52px); text-align: center; border: 1px solid rgba(193,153,70,.45); border-radius: 22px; background: rgba(255,255,255,.88); box-shadow: 0 18px 55px rgba(10,34,72,.12); backdrop-filter: blur(8px); }
+.home-eyebrow { color: #a17827; font: 800 12px Arial,sans-serif; letter-spacing: .18em; }
+.home-panel h2 { color: #09265a; font: 800 clamp(1.8rem,4vw,3rem)/1.15 Arial,sans-serif; margin: 18px 0; }
+.home-panel p { color: #333; font: 17px/1.65 Arial,sans-serif; margin: 0 auto 26px; max-width: 560px; }
+.home-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.home-actions button { border: 1px solid #09265a; border-radius: 10px; background: #09265a; color: white; font: 700 15px Arial,sans-serif; padding: 13px 22px; cursor: pointer; }
+.home-actions button.secondary { background: #fff; color: #09265a; }
+@media (max-width: 768px) {
+  .main-nav { justify-content: flex-start; margin-bottom: 12px; }
+  .menu-toggle { display: flex; width: 44px; height: 44px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid #c3a15e; border-radius: 9px; background: rgba(255,255,255,.95); cursor: pointer; }
+  .menu-toggle span { width: 21px; height: 2px; background: #09265a; border-radius: 2px; }
+  .nav-links { display: none; position: absolute; top: 50px; left: 0; min-width: 175px; flex-direction: column; align-items: stretch; box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+  .nav-links.open { display: flex; }
+  .nav-links button { text-align: left; }
+  .home-landing { padding-top: 35px; }
+  .home-panel p { font-size: 15px; }
+}
