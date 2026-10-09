@@ -31,14 +31,8 @@ interface MagliaVirtus {
         </div>
       </header>
       <section *ngIf="pagina === 'home'" class="home-landing" aria-label="Benvenuti">
-        <div class="home-panel">
-          <span class="home-eyebrow">PASSIONE · SQUADRA · PALLAVOLO</span>
-          <h2>Benvenuti nella Virtus Volley Versilia</h2>
-          <p>Una squadra, la voglia di giocare insieme e la passione per la pallavolo. Questo è il nostro spazio: scopri le maglie e segui la squadra.</p>
-          <div class="home-actions">
-            <button type="button" (click)="vaiA('maglie')">Scopri le maglie</button>
-            <button type="button" class="secondary" (click)="vaiA('risultati')">Risultati</button>
-          </div>
+        <div class="home-panel squad-photo-card">
+          <img src="assets/Squdra.png" alt="Foto della squadra Virtus Volley Versilia">
         </div>
       </section>
       <section *ngIf="pagina === 'giocatori'" class="home-landing" aria-label="Giocatori">
