@@ -104,3 +104,10 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 /* Colonna eliminazione compatta */
 .results .action-cell { width: 7%; }
 @media (max-width: 600px) { .results .action-cell { width: 8%; } }
+
+/* Righe alternate nei colori del logo, molto tenui e quasi bianchi */
+.results tbody tr:nth-child(odd) td { background-color: #fffaf0; }
+.results tbody tr:nth-child(even) td { background-color: #f2f6fd; }
+.results tbody tr:nth-child(odd) .delete-button { background-color: #fffaf0; }
+.results tbody tr:nth-child(even) .delete-button { background-color: #f2f6fd; }
+.results tbody tr .delete-button:hover { background-color: #e9e5de; }
