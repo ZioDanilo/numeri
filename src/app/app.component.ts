@@ -57,11 +57,11 @@ interface MagliaVirtus {
         </p>
         <div *ngIf="!loading && !loadError" class="table-scroll">
           <table>
-            <thead><tr><th>Atleta</th><th>Numero</th><th>Taglia</th><th>Azioni</th></tr></thead>
+            <thead><tr><th>Numero</th><th>Atleta</th><th>Taglia</th><th>Azioni</th></tr></thead>
             <tbody>
               <tr *ngFor="let maglia of maglie">
-                <td>{{ maglia.atleta }}</td>
                 <td>{{ maglia.numero }}</td>
+                <td>{{ maglia.atleta }}</td>
                 <td>{{ maglia.taglia }}</td>
                 <td class="action-cell">
                   <button class="delete-button" type="button" [disabled]="deletingId === maglia.id"
@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
       if (!response.ok) throw new Error('HTTP ' + response.status);
       const data: unknown = await response.json();
       if (!Array.isArray(data)) throw new Error('Risposta non valida');
-      this.maglie = data as MagliaVirtus[];
+      this.maglie = (data as MagliaVirtus[]).sort((a, b) => a.numero - b.numero);
     } catch {
       this.loadError = 'Impossibile caricare le maglie dal database.';
     } finally {
