@@ -38,10 +38,19 @@ interface MagliaVirtus {
       <section *ngIf="pagina === 'giocatori'" class="home-landing players-section" aria-label="Giocatori">
         <div class="home-panel players-panel">
           <div class="players-grid">
-            <div class="player-card" *ngFor="let nome of atleti">
-              <img src="assets/Maglia_fronte.png" [alt]="'Maglia di ' + nome">
-              <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
-              <span class="player-name">{{ nome }}</span>
+            <div class="player-card" *ngFor="let nome of atleti" tabindex="0" [attr.aria-label]="'Maglia di ' + nome + (numeroGiocatore(nome) !== null ? ', numero ' + numeroGiocatore(nome) : '')">
+              <div class="shirt-flipper">
+                <div class="shirt-face shirt-front">
+                  <img src="assets/Maglia_fronte.png" alt="Maglia fronte">
+                  <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                  <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                </div>
+                <div class="shirt-face shirt-back">
+                  <img src="assets/Maglia_retro.png" alt="Maglia retro">
+                  <span class="player-name">{{ nome }}</span>
+                  <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
