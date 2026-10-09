@@ -35,13 +35,14 @@ interface MagliaVirtus {
           <img src="assets/Squadra.png" alt="Foto della squadra Virtus Volley Versilia">
         </div>
       </section>
-      <section *ngIf="pagina === 'giocatori'" class="home-landing" aria-label="Giocatori">
-        <div class="home-panel">
-          <span class="home-eyebrow">VIRTUS VOLLEY VERSILIA</span>
-          <h2>I nostri giocatori</h2>
-          <p>Scopri i giocatori della Virtus Volley Versilia.</p>
+      <section *ngIf="pagina === 'giocatori'" class="home-landing players-landing" aria-label="Giocatori">
+        <div class="home-panel players-panel">
           <div class="players-grid">
-            <div class="player-card" *ngFor="let nome of atleti">{{ nome }}</div>
+            <div class="player-card" *ngFor="let nome of atleti">
+              <img class="player-shirt" src="assets/Maglia_fronte.png" alt="Maglia Virtus Volley Versilia">
+              <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+              <span class="player-name">{{ nome }}</span>
+            </div>
           </div>
         </div>
       </section>
@@ -122,6 +123,10 @@ export class AppComponent implements OnInit {
   }
 
   atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela', 'Paolo', 'Sara D.', 'Sara M.', 'Sonia', 'Vale'];
+  numeroGiocatore(nome: string): number | null {
+    return this.maglie.find(m => m.atleta === nome)?.numero ?? null;
+  }
+
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   maglie: MagliaVirtus[] = [];
