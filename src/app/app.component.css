@@ -30,3 +30,8 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 }
 
 .selectors label { text-align: center; }
+
+.save-actions { text-align: center; margin: 24px auto; }
+.save-actions button { cursor: pointer; border: 0; border-radius: 9px; padding: 13px 42px; background: #9d773b; color: white; font: 700 17px Arial, sans-serif; }
+.save-actions button:disabled { opacity: .55; cursor: wait; }
+.save-actions p { min-height: 22px; font: 600 14px Arial, sans-serif; }
