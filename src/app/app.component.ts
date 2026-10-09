@@ -42,14 +42,14 @@ interface Giocatore {
             <div class="player-card" *ngFor="let nome of atleti" tabindex="0" [attr.aria-label]="'Maglia di ' + nome + (numeroGiocatore(nome) !== null ? ', numero ' + numeroGiocatore(nome) : '')">
               <div class="shirt-flipper">
                 <div class="shirt-face shirt-front">
-                  <img [src]="isLibero(nome) ? 'assets/Maglia_libero_fronte.png' : 'assets/Maglia_fronte.png'" alt="Maglia fronte">
+                  <img [class.libero-kit]="isLibero(nome)" [src]="isLibero(nome) ? 'assets/Maglia_libero_fronte.png' : 'assets/Maglia_fronte.png'" alt="Maglia fronte">
                   <span class="front-player-name">{{ nome }}</span>
                   <span class="front-player-role">{{ ruoloGiocatore(nome) }}</span>
                   <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                   <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                 </div>
                 <div class="shirt-face shirt-back">
-                  <img [src]="isLibero(nome) ? 'assets/Maglia_libero_retro.png' : 'assets/Maglia_retro.png'" alt="Maglia retro">
+                  <img [class.libero-kit]="isLibero(nome)" [src]="isLibero(nome) ? 'assets/Maglia_libero_retro.png' : 'assets/Maglia_retro.png'" alt="Maglia retro">
                   <span class="player-name" [class.name-medium]="nome.length >= 7 && nome.length < 9" [class.name-long]="nome.length >= 9">{{ nome }}</span>
                   <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                 </div>
