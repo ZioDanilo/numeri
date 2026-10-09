@@ -188,7 +188,8 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 /* Flip 3D: fronte a riposo, retro finché hover o focus. */
 .players-panel .player-card { perspective: 1000px; cursor: pointer; }
 .players-panel .shirt-flipper { position: relative; width: 100%; transform-style: preserve-3d; transition: transform .65s ease; }
-.players-panel .player-card:hover .shirt-flipper { transform: rotateY(180deg); }
+.players-panel .shirt-flipper { transform: rotateY(180deg); }
+.players-panel .player-card:hover .shirt-flipper { transform: rotateY(0deg); }
 .players-panel .shirt-face { position: relative; width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-style: flat; }
 .players-panel .shirt-front { transform: rotateY(0deg); }
 .players-panel .shirt-back { position: absolute; inset: 0; transform: rotateY(180deg); }
@@ -208,5 +209,20 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .players-section { min-height: 0; padding-top: clamp(6px, 1.5vh, 14px); padding-bottom: 0; }
   .home-panel.players-panel { padding: clamp(6px, 1vh, 12px) 10px; }
   .players-panel .players-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(2px, .6vh, 6px) 6px; justify-items: center; }
+  .players-panel .player-card { width: min(100%, calc((100dvh - 290px) / 4.5)); }
+}
+
+/* Card dorate separate: retro predefinito, fronte al passaggio del mouse. */
+.players-panel .players-grid { column-gap: 12px; row-gap: 12px; }
+.players-panel .player-card {
+  box-sizing: border-box;
+  padding: 5px;
+  border: 2px solid #c9a04a;
+  border-radius: 10px;
+  background: rgba(255, 253, 247, .94);
+  box-shadow: 0 2px 9px rgba(9, 38, 90, .12);
+}
+@media (min-width: 769px) {
+  .players-panel .players-grid { gap: clamp(7px, 1vh, 12px) 12px; }
   .players-panel .player-card { width: min(100%, calc((100dvh - 290px) / 4.5)); }
 }
