@@ -20,7 +20,7 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 .selectors select { box-sizing: border-box; width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid #bca77c; border-radius: 9px; background: rgba(255,255,255,.94); color: #171717; font: 16px Arial, sans-serif; }
 .selectors select:focus-visible { outline: 3px solid #b48b42; outline-offset: 2px; }
 @media (max-width: 600px) {
-  .page { padding: 18px 14px 40px; background-size: auto 100vh, auto 100vh; }
+  .page { padding: 18px 14px 40px; background-size: 100% 100vh, 100% 100vh; }
   .site-header { align-items: center; flex-direction: column; gap: 12px; }
   .club-logo { position: static; align-self: flex-start; width: 72px; }
   .heading { padding: 0; width: 100%; }
@@ -116,6 +116,6 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 @media (max-width: 768px) {
   .page {
     background-image: url('/assets/Sfondo.png'), url('/assets/Sfondo.png');
-    background-size: auto 100vh, auto 100vh;
+    background-size: 100% 100vh, 100% 100vh;
   }
 }
