@@ -119,3 +119,10 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
     background-size: 100% 100vh, 100% 100vh;
   }
 }
+
+/* Anche su finestre intermedie mantieni i tre selettori su una sola riga. */
+@media (min-width: 601px) and (max-width: 900px) {
+  .selectors { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 8px; width: 100%; }
+  .selectors label { min-width: 0; max-width: none; width: 100%; flex: none; }
+  .selectors select { min-width: 0; width: 100%; padding: 8px 5px; font-size: 14px; }
+}
