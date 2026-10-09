@@ -216,12 +216,22 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 .players-panel .players-grid { column-gap: 12px; row-gap: 12px; }
 .players-panel .player-card {
   box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+/* Il bordo appartiene a entrambe le facce: ruota insieme alla divisa. */
+.players-panel .shirt-face {
+  box-sizing: border-box;
   padding: 5px;
   border: 2px solid #c9a04a;
   border-radius: 10px;
   background: rgba(255, 253, 247, .94);
   box-shadow: 0 2px 9px rgba(9, 38, 90, .12);
 }
+.players-panel .shirt-face img { border-radius: 5px; }
 @media (min-width: 769px) {
   .players-panel .players-grid { gap: clamp(7px, 1vh, 12px) 12px; }
   .players-panel .player-card { width: min(100%, calc((100dvh - 290px) / 4.5)); }
