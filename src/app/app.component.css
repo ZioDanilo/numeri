@@ -60,3 +60,30 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 
 /* Righe dati bianche, senza modificare l'intestazione */
 .results tbody tr, .results tbody td { background: #fff; }
+
+/* Smartphone: atleta 50%, numero e taglia 25% ciascuno */
+@media (max-width: 600px) {
+  .selectors {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    align-items: end;
+  }
+  .selectors label {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    flex: none;
+    gap: 6px;
+    font-size: 13px;
+  }
+  .selectors select {
+    min-width: 0;
+    width: 100%;
+    padding: 8px 4px;
+    font-size: 14px;
+    min-height: 42px;
+  }
+}
