@@ -15,7 +15,7 @@ interface MagliaVirtus {
   template: `
     <main class="page">
       <header class="site-header">
-        <img class="club-logo" src="assets/Logo.png" alt="Logo Virtus Volley Versilia">
+        <img class="club-logo" src="assets/Logo.png?v=20261009-2" alt="Logo Virtus Volley Versilia">
         <div class="heading">
           <h1>Virtus Volley Versilia</h1>
           <p>Scelta maglie</p>
