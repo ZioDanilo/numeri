@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
 
   private readonly baseUrl = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
     ? 'http://localhost:3000/api'
-    : 'https://api.investment-lab.com/api';
+    : 'https://investment-lab-service.onrender.com/api';
 
   get atletiDisponibili(): string[] {
     const assegnati = new Set(this.maglie.map(m => m.atleta.trim()));
