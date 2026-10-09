@@ -2,29 +2,36 @@
 .page {
   box-sizing: border-box;
   min-height: 220vh;
-  padding: clamp(48px, 8vh, 100px) 20px 50px;
+  padding: 24px clamp(16px, 3vw, 48px) 60px;
   background-color: #e8e6e1;
   background-image: url('/assets/Sfondo.png');
   background-repeat: no-repeat;
   background-position: center top;
   background-size: 100% auto;
   color: #141414;
-  text-align: center;
 }
-h1 {
-  margin: 0 auto;
-  max-width: 100%;
-  font: 800 clamp(2rem, 5vw, 5rem)/1.12 Arial, sans-serif;
-  letter-spacing: -.035em;
-  text-shadow: 0 2px 16px #fff9;
+.site-header {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100px;
 }
-h1 span { color: #96702c; }
+.club-logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(64px, 8vw, 110px);
+  height: auto;
+  object-fit: contain;
+}
+.heading { text-align: center; padding: 0 120px; }
+h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; letter-spacing: -.035em; }
+.heading p { margin: 10px 0 0; font: 600 clamp(1rem, 2vw, 1.6rem)/1.3 Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #96702c; }
 @media (max-width: 600px) {
-  .page {
-    min-height: 220vh;
-    padding: 65px 16px 40px;
-    background-position: center top;
-    background-size: auto 100vh;
-  }
-  h1 { font-size: clamp(2rem, 9vw, 3rem); }
+  .page { padding: 18px 14px 40px; background-size: auto 100vh; }
+  .site-header { align-items: center; flex-direction: column; gap: 12px; }
+  .club-logo { position: static; align-self: flex-start; width: 72px; }
+  .heading { padding: 0; width: 100%; }
+  h1 { font-size: clamp(1.7rem, 8vw, 2.7rem); }
 }
