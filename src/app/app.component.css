@@ -244,3 +244,11 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .players-panel .player-name.name-medium { font-size: 10px; }
   .players-panel .player-name.name-long { font-size: 8px; }
 }
+
+/* Nome sempre centrato sulla stessa linea, indipendentemente dal font. */
+.players-panel .shirt-back .player-name {
+  top: 10%;
+  transform: translateY(-50%);
+  line-height: 1;
+  color: #101b2b;
+}
