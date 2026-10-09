@@ -7,13 +7,24 @@
   background-image: url('/assets/volley-background.png'), url('/assets/volley-background.svg');
   background-repeat: no-repeat;
   background-position: center top;
-  background-size: cover;
+  background-size: 100% auto;
   color: #141414;
   text-align: center;
 }
-h1 { margin: 0; font: 800 clamp(2rem, 5vw, 5rem)/1.12 Arial, sans-serif; letter-spacing: -.035em; text-shadow: 0 2px 16px #fff9; }
+h1 {
+  margin: 0 auto;
+  max-width: 100%;
+  font: 800 clamp(2rem, 5vw, 5rem)/1.12 Arial, sans-serif;
+  letter-spacing: -.035em;
+  text-shadow: 0 2px 16px #fff9;
+}
 h1 span { color: #96702c; }
 @media (max-width: 600px) {
-  .page { min-height: 220vh; padding-top: 65px; background-position: center top; }
+  .page {
+    min-height: 220vh;
+    padding: 65px 16px 40px;
+    background-position: center top;
+    background-size: auto 100vh;
+  }
   h1 { font-size: clamp(2rem, 9vw, 3rem); }
 }
