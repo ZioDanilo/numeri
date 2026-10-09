@@ -149,8 +149,8 @@ export class AppComponent implements OnInit {
   deletingId: number | null = null;
   messaggio = '';
 
-  private readonly baseUrl = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-    ? 'http://localhost:3000/api'
+  private readonly baseUrl = /^(localhost|127\\.0\\.0\\.1|10\\.\\d+\\.\\d+\\.\\d+|192\\.168\\.\\d+\\.\\d+|172\\.(1[6-9]|2\\d|3[01])\\.\\d+\\.\\d+)$/.test(location.hostname)
+    ? `http://${location.hostname}:3000/api`
     : 'https://investment-lab-service.onrender.com/api';
 
   get maglieAssegnate(): Giocatore[] { return this.maglie.filter(m => m.numero !== null); }
@@ -177,7 +177,7 @@ export class AppComponent implements OnInit {
       if (!Array.isArray(data)) throw new Error('Risposta non valida');
       this.maglie = (data as Giocatore[]).sort((a, b) => (a.numero ?? 999) - (b.numero ?? 999));
     } catch {
-      this.loadError = 'Impossibile caricare le maglie dal database.';
+      this.loadError = 'Impossibile caricare le maglie dal database. Verifica che il backend sia avviato e che /api/giocatori sia disponibile.';
     } finally {
       this.loading = false;
     }
