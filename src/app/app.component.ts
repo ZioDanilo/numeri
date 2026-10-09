@@ -49,7 +49,6 @@ interface MagliaVirtus {
                   <img src="assets/Maglia_retro.png" alt="Maglia retro">
                   <span class="player-name">{{ nome }}</span>
                   <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
-                  <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                 </div>
               </div>
             </div>
