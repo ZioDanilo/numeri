@@ -44,6 +44,7 @@ interface Giocatore {
                 <div class="shirt-face shirt-front">
                   <img src="assets/Maglia_fronte.png" alt="Maglia fronte">
                   <span class="front-player-name">{{ nome }}</span>
+                  <span class="front-player-role">{{ ruoloGiocatore(nome) }}</span>
                   <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                   <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                 </div>
@@ -136,6 +137,9 @@ export class AppComponent implements OnInit {
   atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela', 'Paolo', 'Sara D.', 'Sara M.', 'Sonia', 'Vale'];
   numeroGiocatore(nome: string): number | null {
     return this.maglie.find(m => m.atleta.trim() === nome)?.numero ?? null;
+  }
+  ruoloGiocatore(nome: string): string {
+    return this.maglie.find(m => m.atleta.trim() === nome)?.ruolo?.trim() || '';
   }
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
