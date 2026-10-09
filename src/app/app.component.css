@@ -188,9 +188,7 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 /* Flip 3D: fronte a riposo, retro finché hover o focus. */
 .players-panel .player-card { perspective: 1000px; cursor: pointer; }
 .players-panel .shirt-flipper { position: relative; width: 100%; transform-style: preserve-3d; transition: transform .65s ease; }
-.players-panel .player-card:hover .shirt-flipper,
-.players-panel .player-card:focus .shirt-flipper,
-.players-panel .player-card:focus-within .shirt-flipper { transform: rotateY(180deg); }
+.players-panel .player-card:hover .shirt-flipper { transform: rotateY(180deg); }
 .players-panel .shirt-face { position: relative; width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-style: flat; }
 .players-panel .shirt-front { transform: rotateY(0deg); }
 .players-panel .shirt-back { position: absolute; inset: 0; transform: rotateY(180deg); }
