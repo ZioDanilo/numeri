@@ -85,7 +85,7 @@ interface MagliaVirtus {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela', 'Paolo', 'Sara D.', 'Sara M.', 'Sonia'];
+  atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela', 'Paolo', 'Sara D.', 'Sara M.', 'Sonia', 'Vale'];
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   maglie: MagliaVirtus[] = [];
