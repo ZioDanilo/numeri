@@ -42,6 +42,7 @@ interface MagliaVirtus {
               <div class="shirt-flipper">
                 <div class="shirt-face shirt-front">
                   <img src="assets/Maglia_fronte.png" alt="Maglia fronte">
+                  <span class="front-player-name">{{ nome }}</span>
                   <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                   <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                 </div>
