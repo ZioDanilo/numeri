@@ -4,7 +4,7 @@
   min-height: 220vh;
   padding: 24px clamp(16px, 3vw, 48px) 60px;
   background-color: #e8e6e1;
-  background-image: url('/assets/Sfondo.png'), url('/assets/Sfondo.png');
+  background-image: url('/assets/Sfondo-largo.png'), url('/assets/Sfondo-largo.png');
   background-repeat: no-repeat;
   background-position: center top, center 100vh;
   background-size: 100% 100vh, 100% 100vh;
@@ -111,3 +111,11 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 .results tbody tr:nth-child(odd) .delete-button { background-color: #fffaf0; }
 .results tbody tr:nth-child(even) .delete-button { background-color: #f2f6fd; }
 .results tbody tr .delete-button:hover { background-color: #e9e5de; }
+
+/* Sfondo responsive: desktop orizzontale, mobile verticale; due copie senza ripetizione infinita. */
+@media (max-width: 768px) {
+  .page {
+    background-image: url('/assets/Sfondo.png'), url('/assets/Sfondo.png');
+    background-size: auto 100vh, auto 100vh;
+  }
+}
