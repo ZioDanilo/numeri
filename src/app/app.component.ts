@@ -19,6 +19,7 @@ interface MagliaVirtus {
         <div id="nav-links" class="nav-links" [class.open]="menuAperto">
           <button type="button" [class.active]="pagina === 'home'" (click)="vaiA('home')">Home</button>
           <button type="button" [class.active]="pagina === 'maglie'" (click)="vaiA('maglie')">Maglie</button>
+          <button type="button" [class.active]="pagina === 'giocatori'" (click)="vaiA('giocatori')">Giocatori</button>
           <button type="button" [class.active]="pagina === 'risultati'" (click)="vaiA('risultati')">Risultati</button>
         </div>
       </nav>
@@ -26,7 +27,7 @@ interface MagliaVirtus {
         <img class="club-logo" src="assets/Logo.png?v=20261009-2" alt="Logo Virtus Volley Versilia">
         <div class="heading">
           <h1>Virtus Volley Versilia</h1>
-          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : 'La nostra squadra' }}</p>
+          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : pagina === 'giocatori' ? 'Giocatori' : 'La nostra squadra' }}</p>
         </div>
       </header>
       <section *ngIf="pagina === 'home'" class="home-landing" aria-label="Benvenuti">
@@ -37,6 +38,16 @@ interface MagliaVirtus {
           <div class="home-actions">
             <button type="button" (click)="vaiA('maglie')">Scopri le maglie</button>
             <button type="button" class="secondary" (click)="vaiA('risultati')">Risultati</button>
+          </div>
+        </div>
+      </section>
+      <section *ngIf="pagina === 'giocatori'" class="home-landing" aria-label="Giocatori">
+        <div class="home-panel">
+          <span class="home-eyebrow">VIRTUS VOLLEY VERSILIA</span>
+          <h2>I nostri giocatori</h2>
+          <p>Scopri i giocatori della Virtus Volley Versilia.</p>
+          <div class="players-grid">
+            <div class="player-card" *ngFor="let nome of atleti">{{ nome }}</div>
           </div>
         </div>
       </section>
@@ -109,7 +120,7 @@ interface MagliaVirtus {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  pagina: 'home' | 'maglie' | 'risultati' = 'home';
+  pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' = 'home';
   menuAperto = false;
   vaiA(pagina: 'home' | 'maglie' | 'risultati'): void {
     this.pagina = pagina;
