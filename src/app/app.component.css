@@ -202,3 +202,13 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 /* Retro: numero maglia nella parte bianca; numero pantaloncini sul lato opposto. */
 .players-panel .shirt-back .player-number { top: 30%; }
 .players-panel .shirt-front .shorts-number { left: 37%; top: 85%; }
+
+/* Soluzione 1: tre righe da sei divise complete, senza scroll su desktop. */
+@media (min-width: 769px) {
+  .page:has(.players-section) { min-height: 100vh; height: 100dvh; overflow: hidden; padding-bottom: 8px; }
+  .page:has(.players-section) .site-header { margin-bottom: 0; }
+  .players-section { min-height: 0; padding-top: clamp(6px, 1.5vh, 14px); padding-bottom: 0; }
+  .home-panel.players-panel { padding: clamp(6px, 1vh, 12px) 10px; }
+  .players-panel .players-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(2px, .6vh, 6px) 6px; justify-items: center; }
+  .players-panel .player-card { width: min(100%, calc((100dvh - 290px) / 4.5)); }
+}
