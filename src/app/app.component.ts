@@ -47,7 +47,7 @@ interface MagliaVirtus {
                 </div>
                 <div class="shirt-face shirt-back">
                   <img src="assets/Maglia_retro.png" alt="Maglia retro">
-                  <span class="player-name">{{ nome }}</span>
+                  <span class="player-name" [class.name-medium]="nome.length >= 7 && nome.length < 9" [class.name-long]="nome.length >= 9">{{ nome }}</span>
                   <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
                 </div>
               </div>
