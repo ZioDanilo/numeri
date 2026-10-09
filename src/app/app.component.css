@@ -35,3 +35,22 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 .save-actions button { cursor: pointer; border: 0; border-radius: 9px; padding: 13px 42px; background: #9d773b; color: white; font: 700 17px Arial, sans-serif; }
 .save-actions button:disabled { opacity: .55; cursor: wait; }
 .save-actions p { min-height: 22px; font: 600 14px Arial, sans-serif; }
+
+
+.results { max-width: 900px; margin: 26px auto 0; text-align: center; font-family: Arial, sans-serif; }
+.results h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); margin: 0 0 14px; }
+.table-scroll { width: 100%; overflow-x: auto; border-radius: 10px; }
+.results table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,.92); }
+.results th, .results td { border: 1px solid #b8944e; padding: 12px 14px; text-align: center; }
+.results th { background: rgba(172,131,58,.16); font-weight: 700; }
+.results .action-cell { padding: 0; width: 86px; }
+.delete-button { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 49px; border: 0; background: #f8e9e7; color: #a33229; cursor: pointer; transition: background .2s; }
+.delete-button:hover { background: #f1cbc7; }
+.delete-button:focus-visible { outline: 3px solid #a33229; outline-offset: -3px; }
+.delete-button:disabled { opacity: .5; cursor: wait; }
+.retry { border: 1px solid #b8944e; background: #fff; border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+@media (max-width: 600px) {
+  .results th, .results td { padding: 10px 7px; font-size: 13px; }
+  .results .action-cell { width: 52px; }
+  .delete-button { min-height: 43px; }
+}
