@@ -23,26 +23,26 @@ interface MagliaVirtus {
       </header>
       <section class="selectors" aria-label="Scelta maglie">
         <label>Atleta
-          <select name="atleta" #atletaSelect [disabled]="loading || !!loadError">
+          <select name="atleta" #atletaSelect (change)="atletaScelto = atletaSelect.value" [disabled]="loading || !!loadError">
             <option value="" selected disabled>Seleziona atleta</option>
             <option *ngFor="let nome of atletiDisponibili" [value]="nome">{{ nome }}</option>
           </select>
         </label>
         <label>Numero
-          <select name="numero" #numeroSelect [disabled]="loading || !!loadError">
+          <select name="numero" #numeroSelect (change)="numeroScelto = numeroSelect.value" [disabled]="loading || !!loadError">
             <option value="" selected disabled>Seleziona numero</option>
             <option *ngFor="let n of numeriDisponibili" [value]="n">{{ n }}</option>
           </select>
         </label>
         <label>Taglia
-          <select name="taglia" #tagliaSelect [disabled]="loading || !!loadError">
+          <select name="taglia" #tagliaSelect (change)="tagliaScelta = tagliaSelect.value" [disabled]="loading || !!loadError">
             <option value="" selected disabled>Seleziona taglia</option>
             <option *ngFor="let t of taglie" [value]="t">{{ t }}</option>
           </select>
         </label>
       </section>
       <div class="save-actions">
-        <button type="button" [disabled]="saving || loading || !!loadError"
+        <button type="button" [disabled]="saving || loading || !!loadError || !atletaScelto || !numeroScelto || !tagliaScelta"
           (click)="salva(atletaSelect, numeroSelect, tagliaSelect)">
           {{ saving ? 'Salvataggio...' : 'Salva' }}
         </button>
@@ -91,6 +91,9 @@ export class AppComponent implements OnInit {
   maglie: MagliaVirtus[] = [];
   loading = true;
   loadError = '';
+  atletaScelto = '';
+  numeroScelto = '';
+  tagliaScelta = '';
   saving = false;
   deletingId: number | null = null;
   messaggio = '';
@@ -148,6 +151,9 @@ export class AppComponent implements OnInit {
       atletaSelect.value = '';
       numeroSelect.value = '';
       tagliaSelect.value = '';
+      this.atletaScelto = '';
+      this.numeroScelto = '';
+      this.tagliaScelta = '';
       await this.caricaMaglie();
       this.messaggio = this.loadError || 'Scelta salvata correttamente.';
     } catch (error) {
