@@ -122,7 +122,7 @@ interface MagliaVirtus {
 export class AppComponent implements OnInit {
   pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' = 'home';
   menuAperto = false;
-  vaiA(pagina: 'home' | 'maglie' | 'risultati'): void {
+  vaiA(pagina: 'home' | 'maglie' | 'giocatori' | 'risultati'): void {
     this.pagina = pagina;
     this.menuAperto = false;
   }
