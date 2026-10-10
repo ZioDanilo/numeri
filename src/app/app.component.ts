@@ -19,7 +19,7 @@ interface Giocatore {
         <button class="menu-toggle" type="button" [attr.aria-expanded]="menuAperto" aria-controls="nav-links" aria-label="Apri o chiudi menu" (click)="menuAperto = !menuAperto"><span></span><span></span><span></span></button>
         <div id="nav-links" class="nav-links" [class.open]="menuAperto">
           <button type="button" [class.active]="pagina === 'home'" (click)="vaiA('home')">Home</button>
-          <button type="button" [class.active]="pagina === 'maglie'" (click)="vaiA('maglie')">Maglie</button>
+          <button type="button" [class.active]="pagina === 'maglie'" (click)="vaiA('maglie')">Scelta maglie</button>
           <button type="button" [class.active]="pagina === 'giocatori'" (click)="vaiA('giocatori')">Giocatori</button>
           <button type="button" [class.active]="pagina === 'risultati'" (click)="vaiA('risultati')">Risultati</button>
         </div>
