@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 
-interface MagliaVirtus {
+interface Giocatore {
   id: number;
   atleta: string;
-  numero: number;
-  taglia: string;
+  numero: number | null;
+  taglia: string | null;
+  ruolo: string | null;
 }
 
 @Component({
@@ -14,13 +15,53 @@ interface MagliaVirtus {
   imports: [NgFor, NgIf],
   template: `
     <main class="page">
+      <nav class="main-nav" aria-label="Navigazione principale">
+        <button class="menu-toggle" type="button" [attr.aria-expanded]="menuAperto" aria-controls="nav-links" aria-label="Apri o chiudi menu" (click)="menuAperto = !menuAperto"><span></span><span></span><span></span></button>
+        <div id="nav-links" class="nav-links" [class.open]="menuAperto">
+          <button type="button" [class.active]="pagina === 'home'" (click)="vaiA('home')">Home</button>
+          <button type="button" [class.active]="pagina === 'maglie'" (click)="vaiA('maglie')">Scelta maglie</button>
+          <button type="button" [class.active]="pagina === 'giocatori'" (click)="vaiA('giocatori')">Giocatori</button>
+          <button type="button" [class.active]="pagina === 'risultati'" (click)="vaiA('risultati')">Risultati</button>
+        </div>
+      </nav>
       <header class="site-header">
         <img class="club-logo" src="assets/Logo.png?v=20261009-2" alt="Logo Virtus Volley Versilia">
         <div class="heading">
           <h1>Virtus Volley Versilia</h1>
-          <p>Scelta maglie</p>
+          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : pagina === 'giocatori' ? 'Giocatori' : 'La nostra squadra' }}</p>
         </div>
       </header>
+      <section *ngIf="pagina === 'home'" class="home-landing" aria-label="Benvenuti">
+        <div class="home-panel squad-photo-card">
+          <img src="assets/Squadra.png" alt="Foto della squadra Virtus Volley Versilia">
+        </div>
+      </section>
+      <section *ngIf="pagina === 'giocatori'" class="home-landing players-section" aria-label="Giocatori">
+        <div class="home-panel players-panel">
+          <div class="players-grid">
+            <div class="player-card" *ngFor="let nome of atleti" tabindex="0" [attr.aria-label]="'Maglia di ' + nome + (numeroGiocatore(nome) !== null ? ', numero ' + numeroGiocatore(nome) : '')">
+              <div class="shirt-flipper">
+                <div class="shirt-face shirt-front">
+                  <img [class.libero-kit]="isLibero(nome)" [src]="isLibero(nome) ? 'assets/Maglia_libero_fronte.png?v=20261009-2' : 'assets/Maglia_fronte.png'" alt="Maglia fronte">
+                  <span class="front-player-name">{{ nome }}</span>
+                  <span class="front-player-role">{{ ruoloGiocatore(nome) }}</span>
+                  <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                  <span class="shorts-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                </div>
+                <div class="shirt-face shirt-back">
+                  <img [class.libero-kit]="isLibero(nome)" [src]="isLibero(nome) ? 'assets/Maglia_libero_retro.png?v=20261009-2' : 'assets/Maglia_retro.png'" alt="Maglia retro">
+                  <span class="player-name" [class.name-medium]="nome.length >= 7 && nome.length < 9" [class.name-long]="nome.length >= 9">{{ nome }}</span>
+                  <span class="player-number" *ngIf="numeroGiocatore(nome) !== null">{{ numeroGiocatore(nome) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section *ngIf="pagina === 'risultati'" class="home-landing" aria-label="Risultati">
+        <div class="home-panel"><span class="home-eyebrow">VIRTUS VOLLEY VERSILIA</span><h2>Risultati</h2><p>Qui troverai i risultati delle partite della squadra. La sezione è in preparazione.</p></div>
+      </section>
+      <ng-container *ngIf="pagina === 'maglie'">
       <section class="selectors" aria-label="Scelta maglie">
         <label>Atleta
           <select name="atleta" #atletaSelect (change)="atletaScelto = atletaSelect.value" [disabled]="loading || !!loadError">
@@ -59,7 +100,7 @@ interface MagliaVirtus {
           <table>
             <thead><tr><th>Numero</th><th>Atleta</th><th>Taglia</th><th aria-label="Elimina"></th></tr></thead>
             <tbody>
-              <tr *ngFor="let maglia of maglie">
+              <tr *ngFor="let maglia of maglieAssegnate">
                 <td>{{ maglia.numero }}</td>
                 <td>{{ maglia.atleta }}</td>
                 <td>{{ maglia.taglia }}</td>
@@ -75,20 +116,37 @@ interface MagliaVirtus {
                   </button>
                 </td>
               </tr>
-              <tr *ngIf="maglie.length === 0"><td colspan="4">Nessuna maglia assegnata</td></tr>
+              <tr *ngIf="maglieAssegnate.length === 0"><td colspan="4">Nessuna maglia assegnata</td></tr>
             </tbody>
           </table>
         </div>
       </section>
+      </ng-container>
     </main>
   `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' = 'home';
+  menuAperto = false;
+  vaiA(pagina: 'home' | 'maglie' | 'giocatori' | 'risultati'): void {
+    this.pagina = pagina;
+    this.menuAperto = false;
+  }
+
   atleti = ['Alessio', 'Andrea', 'Asia', 'Cristiano', 'Daniele', 'Francesca', 'Giacomo', 'Joshua', 'Lillo', 'Lorenzo', 'Luca', 'Martina', 'Michela', 'Paolo', 'Sara D.', 'Sara M.', 'Sonia', 'Vale'];
+  numeroGiocatore(nome: string): number | null {
+    return this.maglie.find(m => m.atleta.trim() === nome)?.numero ?? null;
+  }
+  ruoloGiocatore(nome: string): string {
+    return this.maglie.find(m => m.atleta.trim() === nome)?.ruolo?.trim() || '';
+  }
+  isLibero(nome: string): boolean {
+    return this.ruoloGiocatore(nome).toLocaleLowerCase('it') === 'libero';
+  }
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
   taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-  maglie: MagliaVirtus[] = [];
+  maglie: Giocatore[] = [];
   loading = true;
   loadError = '';
   atletaScelto = '';
@@ -98,17 +156,19 @@ export class AppComponent implements OnInit {
   deletingId: number | null = null;
   messaggio = '';
 
-  private readonly baseUrl = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-    ? 'http://localhost:3000/api'
+  private readonly baseUrl = /^(localhost|127\\.0\\.0\\.1|10\\.\\d+\\.\\d+\\.\\d+|192\\.168\\.\\d+\\.\\d+|172\\.(1[6-9]|2\\d|3[01])\\.\\d+\\.\\d+)$/.test(location.hostname)
+    ? `http://${location.hostname}:3000/api`
     : 'https://investment-lab-service.onrender.com/api';
 
+  get maglieAssegnate(): Giocatore[] { return this.maglie.filter(m => m.numero !== null); }
+
   get atletiDisponibili(): string[] {
-    const assegnati = new Set(this.maglie.map(m => m.atleta.trim()));
+    const assegnati = new Set(this.maglie.filter(m => m.numero !== null).map(m => m.atleta.trim()));
     return this.atleti.filter(nome => !assegnati.has(nome));
   }
 
   get numeriDisponibili(): number[] {
-    const assegnati = new Set(this.maglie.map(m => m.numero));
+    const assegnati = new Set(this.maglie.filter(m => m.numero !== null).map(m => m.numero));
     return this.numeri.filter(numero => !assegnati.has(numero));
   }
 
@@ -118,13 +178,13 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.loadError = '';
     try {
-      const response = await fetch(this.baseUrl + '/maglie-virtus', { cache: 'no-store' });
+      const response = await fetch(this.baseUrl + '/giocatori', { cache: 'no-store' });
       if (!response.ok) throw new Error('HTTP ' + response.status);
       const data: unknown = await response.json();
       if (!Array.isArray(data)) throw new Error('Risposta non valida');
-      this.maglie = (data as MagliaVirtus[]).sort((a, b) => a.numero - b.numero);
+      this.maglie = (data as Giocatore[]).sort((a, b) => (a.numero ?? 999) - (b.numero ?? 999));
     } catch {
-      this.loadError = 'Impossibile caricare le maglie dal database.';
+      this.loadError = 'Impossibile caricare le maglie dal database. Verifica che il backend sia avviato e che /api/giocatori sia disponibile.';
     } finally {
       this.loading = false;
     }
@@ -141,7 +201,7 @@ export class AppComponent implements OnInit {
     this.saving = true;
     this.messaggio = '';
     try {
-      const response = await fetch(this.baseUrl + '/maglie-virtus', {
+      const response = await fetch(this.baseUrl + '/giocatori', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ atleta, numero, taglia })
@@ -164,13 +224,13 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async elimina(maglia: MagliaVirtus): Promise<void> {
+  async elimina(maglia: Giocatore): Promise<void> {
     if (this.deletingId !== null) return;
     if (!confirm('Eliminare la maglia di ' + maglia.atleta + ' (n. ' + maglia.numero + ')?')) return;
     this.deletingId = maglia.id;
     this.messaggio = '';
     try {
-      const response = await fetch(this.baseUrl + '/maglie-virtus/' + maglia.id, { method: 'DELETE' });
+      const response = await fetch(this.baseUrl + '/giocatori/' + maglia.id, { method: 'DELETE' });
       if (!response.ok) throw new Error('Cancellazione non riuscita.');
       await this.caricaMaglie();
       this.messaggio = this.loadError || 'Maglia eliminata.';

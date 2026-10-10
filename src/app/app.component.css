@@ -126,3 +126,194 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .selectors label { min-width: 0; max-width: none; width: 100%; flex: none; }
   .selectors select { min-width: 0; width: 100%; padding: 8px 5px; font-size: 14px; }
 }
+
+/* Navigazione e landing page Virtus */
+.main-nav { position: relative; z-index: 10; display: flex; justify-content: flex-end; max-width: 1200px; margin: 0 auto 16px; }
+.nav-links { display: flex; gap: 8px; padding: 6px; border: 1px solid rgba(185,148,78,.35); border-radius: 14px; background: rgba(255,255,255,.88); backdrop-filter: blur(12px); }
+.nav-links button { border: 0; background: transparent; color: #09265a; font: 700 15px Arial,sans-serif; border-radius: 9px; padding: 12px 22px; cursor: pointer; }
+.nav-links button:hover, .nav-links button.active { background: #0a285b; color: #fff; }
+.menu-toggle { display: none; }
+.home-landing { display: flex; justify-content: center; align-items: flex-start; min-height: 55vh; padding: clamp(30px,8vh,100px) 12px 30px; }
+.home-panel { box-sizing: border-box; width: min(720px,100%); padding: clamp(26px,5vw,52px); text-align: center; border: 1px solid rgba(193,153,70,.45); border-radius: 22px; background: rgba(255,255,255,.88); box-shadow: 0 18px 55px rgba(10,34,72,.12); backdrop-filter: blur(8px); }
+.home-eyebrow { color: #a17827; font: 800 12px Arial,sans-serif; letter-spacing: .18em; }
+.home-panel h2 { color: #09265a; font: 800 clamp(1.8rem,4vw,3rem)/1.15 Arial,sans-serif; margin: 18px 0; }
+.home-panel p { color: #333; font: 17px/1.65 Arial,sans-serif; margin: 0 auto 26px; max-width: 560px; }
+.home-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.home-actions button { border: 1px solid #09265a; border-radius: 10px; background: #09265a; color: white; font: 700 15px Arial,sans-serif; padding: 13px 22px; cursor: pointer; }
+.home-actions button.secondary { background: #fff; color: #09265a; }
+@media (max-width: 768px) {
+  .main-nav { justify-content: flex-start; margin-bottom: 12px; }
+  .menu-toggle { display: flex; width: 44px; height: 44px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid #c3a15e; border-radius: 9px; background: rgba(255,255,255,.95); cursor: pointer; }
+  .menu-toggle span { width: 21px; height: 2px; background: #09265a; border-radius: 2px; }
+  .nav-links { display: none; position: absolute; top: 50px; left: 0; min-width: 175px; flex-direction: column; align-items: stretch; box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+  .nav-links.open { display: flex; }
+  .nav-links button { text-align: left; }
+  .home-landing { padding-top: 35px; }
+  .home-panel p { font-size: 15px; }
+}
+
+/* Navbar desktop: 60% della larghezza, centrata orizzontalmente */
+@media (min-width: 769px) {
+  .main-nav { width: 60%; max-width: none; margin-left: auto; margin-right: auto; justify-content: center; }
+  .nav-links { width: 100%; justify-content: space-evenly; }
+  .nav-links button { flex: 1; text-align: center; }
+}
+
+/* Elenco giocatori nella sezione dedicata */
+.players-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 10px; margin-top: 20px; }
+.player-card { padding: 13px 10px; border: 1px solid rgba(185,148,78,.45); border-radius: 10px; background: rgba(255,250,240,.88); color: #09265a; font: 700 15px Arial,sans-serif; }
+
+/* Home: la card si adatta alla foto intera, senza tagli o deformazioni. */
+.home-panel.squad-photo-card { width: fit-content; max-width: 100%; padding: 0; overflow: hidden; line-height: 0; }
+.squad-photo-card img { display: block; width: auto; height: auto; max-width: 100%; object-fit: contain; border-radius: inherit; }
+
+/* Giocatori: contenitore largo quanto la navbar, sei maglie per riga. */
+.players-section { padding-left: 0; padding-right: 0; }
+.home-panel.players-panel { width: 60%; max-width: none; padding: clamp(10px, 1.5vw, 22px); }
+.players-panel .players-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 0; }
+.players-panel .player-card { position: relative; min-width: 0; padding: 0; overflow: visible; border: 0; background: transparent; box-shadow: none; }
+.players-panel .player-card img { display: block; width: 100%; height: auto; }
+.players-panel .player-name { position: absolute; z-index: 100; top: 3%; left: 0; width: 100%; text-align: center; font-size: clamp(10px, 1.1vw, 15px); font-weight: 800; color: #09265a; text-shadow: 0 1px 3px white, 0 -1px 3px white; }
+.players-panel .player-number { position: absolute; z-index: 100; top: 43%; left: 50%; transform: translate(-50%, -50%); color: #09265a; -webkit-text-stroke: 1px #d4aa46; font-size: clamp(17px, 2.5vw, 38px); font-weight: 900; line-height: 1; text-shadow: 0 1px 2px #fff; }
+@media (max-width: 768px) {
+  .home-panel.players-panel { width: 100%; padding: 12px; }
+  .players-panel .players-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .players-panel .player-name { font-size: 12px; }
+  .players-panel .player-number { font-size: clamp(19px, 5vw, 32px); }
+}
+@media (max-width: 420px) {
+  .players-panel .players-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Flip 3D: fronte a riposo, retro finché hover o focus. */
+.players-panel .player-card { perspective: 1000px; cursor: pointer; }
+.players-panel .shirt-flipper { position: relative; width: 100%; transform-style: preserve-3d; transition: transform .65s ease; }
+.players-panel .shirt-flipper { transform: rotateY(180deg); }
+.players-panel .player-card:hover .shirt-flipper { transform: rotateY(0deg); }
+.players-panel .shirt-face { position: relative; width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-style: flat; }
+.players-panel .shirt-front { transform: rotateY(0deg); }
+.players-panel .shirt-back { position: absolute; inset: 0; transform: rotateY(180deg); }
+.players-panel .shirt-face img { display: block; width: 100%; height: auto; }
+.players-panel .shirt-back .player-name { top: 7%; }
+.players-panel .shorts-number { position: absolute; z-index: 100; top: 85%; left: 75%; transform: translate(-50%,-50%); color: white; font-size: clamp(11px, 1.5vw, 22px); font-weight: 900; line-height: 1; text-shadow: 0 1px 2px #09265a; }
+@media (max-width: 768px) { .players-panel .shorts-number { font-size: clamp(14px, 3vw, 22px); } }
+
+/* Retro: numero maglia nella parte bianca; numero pantaloncini sul lato opposto. */
+.players-panel .shirt-back .player-number { top: 30%; }
+.players-panel .shirt-front .shorts-number { left: 37%; top: 85%; }
+
+/* Soluzione 1: tre righe da sei divise complete, senza scroll su desktop. */
+@media (min-width: 769px) {
+  .page:has(.players-section) { min-height: 100vh; height: 100dvh; overflow: hidden; padding-bottom: 8px; }
+  .page:has(.players-section) .site-header { margin-bottom: 0; }
+  .players-section { min-height: 0; padding-top: clamp(6px, 1.5vh, 14px); padding-bottom: 0; }
+  .home-panel.players-panel { padding: clamp(6px, 1vh, 12px) 10px; }
+  .players-panel .players-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(2px, .6vh, 6px) 6px; justify-items: center; }
+  .players-panel .player-card { width: min(100%, calc((100dvh - 290px) / 4.5)); }
+}
+
+/* Card dorate separate: retro predefinito, fronte al passaggio del mouse. */
+.players-panel .players-grid { column-gap: 12px; row-gap: 12px; }
+.players-panel .player-card {
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+/* Il bordo appartiene a entrambe le facce: ruota insieme alla divisa. */
+.players-panel .shirt-face {
+  box-sizing: border-box;
+  padding: 5px;
+  border: 2px solid #c9a04a;
+  border-radius: 10px;
+  background: rgba(255, 253, 247, .94);
+  box-shadow: 0 2px 9px rgba(9, 38, 90, .12);
+}
+.players-panel .shirt-face img { border-radius: 5px; }
+@media (min-width: 769px) {
+  .players-panel .players-grid { gap: clamp(7px, 1vh, 12px) 12px; }
+  .players-panel .player-card { width: min(100%, calc((100dvh - 290px) / 4.5)); }
+}
+
+.players-panel .player-name { color: #061a3d; }
+.players-panel .player-name.name-medium { font-size: clamp(9px, .9vw, 12px); }
+.players-panel .player-name.name-long { font-size: clamp(8px, .72vw, 10px); }
+@media (max-width: 768px) {
+  .players-panel .player-name.name-medium { font-size: 10px; }
+  .players-panel .player-name.name-long { font-size: 8px; }
+}
+
+/* Nome sempre centrato sulla stessa linea, indipendentemente dal font. */
+.players-panel .shirt-back .player-name {
+  top: 14%;
+  transform: translateY(-50%);
+  line-height: 1;
+  color: #101b2b;
+}
+
+.players-panel .shirt-front { background: #fff; }
+.players-panel .shirt-front img { opacity: .12; }
+.players-panel .shirt-front .player-number,
+.players-panel .shirt-front .shorts-number { display: none; }
+.players-panel .front-player-name {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 94%; text-align: center;
+  color: #101b2b; font-size: clamp(11px, 1.15vw, 16px);
+  font-weight: 800; line-height: 1.15;
+}
+
+/* Fascia superiore del fronte: stessa tinta dell'intestazione tabella Maglie. */
+.players-panel .shirt-front { overflow: hidden; }
+.players-panel .shirt-front .front-player-name {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 101;
+  top: 2px;
+  left: 2px;
+  width: calc(100% - 4px);
+  height: 10%;
+  transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border-bottom: 1px solid #b8944e;
+  border-radius: 7px 7px 0 0;
+  background: rgba(172,131,58,.16);
+  color: #101b2b;
+  font-size: clamp(9px, .9vw, 13px);
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Pannello esterno giocatori quasi trasparente: sfondo visibile. */
+.home-panel.players-panel { background: rgba(255,255,255,.06); backdrop-filter: none; }
+
+/* Seconda fascia 10% sul fronte, subito sotto il nome: ruolo dal DB. */
+.players-panel .shirt-front .front-player-role {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 101;
+  top: calc(2px + 10%);
+  left: 2px;
+  width: calc(100% - 4px);
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border-bottom: 1px solid #b8944e;
+  color: #101b2b;
+  font-size: clamp(9px, .85vw, 12px);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  background: rgba(255,255,255,.72);
+}
+
+
