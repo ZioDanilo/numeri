@@ -317,3 +317,11 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
 }
 
 
+
+/* Schermi piccoli: rotazione persistente solo sulla card selezionata.
+   Disattiva il comportamento hover che sui touch può rimanere bloccato. */
+@media (max-width: 768px) {
+  .players-panel .player-card:hover .shirt-flipper { transform: rotateY(180deg); }
+  .players-panel .player-card.card-selected .shirt-flipper,
+  .players-panel .player-card.card-selected:hover .shirt-flipper { transform: rotateY(0deg); }
+}

@@ -39,7 +39,7 @@ interface Giocatore {
       <section *ngIf="pagina === 'giocatori'" class="home-landing players-section" aria-label="Giocatori">
         <div class="home-panel players-panel">
           <div class="players-grid">
-            <div class="player-card" *ngFor="let nome of atleti" tabindex="0" [attr.aria-label]="'Maglia di ' + nome + (numeroGiocatore(nome) !== null ? ', numero ' + numeroGiocatore(nome) : '')">
+            <div class="player-card" *ngFor="let nome of atleti" tabindex="0" [class.card-selected]="giocatoreGirato === nome" (click)="selezionaGiocatore(nome)" (keydown.enter)="selezionaGiocatore(nome)" (keydown.space)="$event.preventDefault(); selezionaGiocatore(nome)" [attr.aria-label]="'Maglia di ' + nome + (numeroGiocatore(nome) !== null ? ', numero ' + numeroGiocatore(nome) : '')">
               <div class="shirt-flipper">
                 <div class="shirt-face shirt-front">
                   <img [class.libero-kit]="isLibero(nome)" [src]="isLibero(nome) ? 'assets/Maglia_libero_fronte.png?v=20261009-2' : 'assets/Maglia_fronte.png'" alt="Maglia fronte">
@@ -129,7 +129,14 @@ interface Giocatore {
 export class AppComponent implements OnInit {
   pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' = 'home';
   menuAperto = false;
+  giocatoreGirato: string | null = null;
+  selezionaGiocatore(nome: string): void {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      this.giocatoreGirato = this.giocatoreGirato === nome ? null : nome;
+    }
+  }
   vaiA(pagina: 'home' | 'maglie' | 'giocatori' | 'risultati'): void {
+    this.giocatoreGirato = null;
     this.pagina = pagina;
     this.menuAperto = false;
   }
