@@ -23,13 +23,14 @@ interface Giocatore {
           <button type="button" [class.active]="pagina === 'maglie'" (click)="vaiA('maglie')">Scelta maglie</button>
           <button type="button" [class.active]="pagina === 'giocatori'" (click)="vaiA('giocatori')">Giocatori</button>
           <button type="button" [class.active]="pagina === 'risultati'" (click)="vaiA('risultati')">Risultati</button>
+          <button type="button" [class.active]="pagina === 'fotogallery'" (click)="vaiA('fotogallery')">Fotogallery</button>
         </div>
       </nav>
       <header class="site-header">
         <img class="club-logo" src="assets/Logo.png?v=20261009-2" alt="Logo Virtus Volley Versilia">
         <div class="heading">
           <h1>Virtus Volley Versilia</h1>
-          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : pagina === 'giocatori' ? 'Giocatori' : 'La nostra squadra' }}</p>
+          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : pagina === 'fotogallery' ? 'Fotogallery' : pagina === 'giocatori' ? 'Giocatori' : 'La nostra squadra' }}</p>
         </div>
       </header>
       <section *ngIf="pagina === 'home'" class="home-landing" aria-label="Benvenuti">
@@ -62,6 +63,7 @@ interface Giocatore {
       <section *ngIf="pagina === 'risultati'" class="home-landing" aria-label="Risultati">
         <div class="home-panel"><span class="home-eyebrow">VIRTUS VOLLEY VERSILIA</span><h2>Risultati</h2><p>Qui troverai i risultati delle partite della squadra. La sezione è in preparazione.</p></div>
       </section>
+      <section *ngIf="pagina === 'fotogallery'" class="home-landing" aria-label="Fotogallery"></section>
       <ng-container *ngIf="pagina === 'maglie'">
       <section class="selectors" aria-label="Scelta maglie">
         <label>Atleta
@@ -133,7 +135,7 @@ interface Giocatore {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' = 'home';
+  pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' | 'fotogallery' = 'home';
   menuAperto = false;
   giocatoreGirato: string | null = null;
   selezionaGiocatore(nome: string): void {
@@ -141,7 +143,7 @@ export class AppComponent implements OnInit {
       this.giocatoreGirato = this.giocatoreGirato === nome ? null : nome;
     }
   }
-  vaiA(pagina: 'home' | 'maglie' | 'giocatori' | 'risultati'): void {
+  vaiA(pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' | 'fotogallery'): void {
     this.giocatoreGirato = null;
     this.pagina = pagina;
     this.menuAperto = false;
