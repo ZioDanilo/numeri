@@ -6,6 +6,7 @@ interface Giocatore {
   atleta: string;
   numero: number | null;
   taglia: string | null;
+  nickname: string | null;
   ruolo: string | null;
 }
 
@@ -81,10 +82,18 @@ interface Giocatore {
             <option *ngFor="let t of taglie" [value]="t">{{ t }}</option>
           </select>
         </label>
+        <label class="nickname-field">Nickname
+          <input type="text" name="nickname" #nicknameInput maxlength="100" required [value]="nicknameScelto" (input)="nicknameScelto = nicknameInput.value" [disabled]="loading || !!loadError" placeholder="Inserisci nickname">
+        </label>
+        <fieldset class="role-field" [disabled]="loading || !!loadError">
+          <legend>Ruolo</legend>
+          <label><input type="radio" name="ruolo" value="Giocatore" [checked]="ruoloScelto === 'Giocatore'" (change)="ruoloScelto = 'Giocatore'"> Giocatore</label>
+          <label><input type="radio" name="ruolo" value="Libero" [checked]="ruoloScelto === 'Libero'" (change)="ruoloScelto = 'Libero'"> Libero</label>
+        </fieldset>
       </section>
       <div class="save-actions">
-        <button type="button" [disabled]="saving || loading || !!loadError || !atletaScelto || !numeroScelto || !tagliaScelta"
-          (click)="salva(atletaSelect, numeroSelect, tagliaSelect)">
+        <button type="button" [disabled]="saving || loading || !!loadError || !atletaScelto || !numeroScelto || !tagliaScelta || !nicknameScelto.trim() || !ruoloScelto"
+          (click)="salva(atletaSelect, numeroSelect, tagliaSelect, nicknameInput)">
           {{ saving ? 'Salvataggio...' : 'Salva' }}
         </button>
         <p role="status" aria-live="polite">{{ messaggio }}</p>
@@ -98,12 +107,14 @@ interface Giocatore {
         </p>
         <div *ngIf="!loading && !loadError" class="table-scroll">
           <table>
-            <thead><tr><th>Numero</th><th>Atleta</th><th>Taglia</th><th aria-label="Elimina"></th></tr></thead>
+            <thead><tr><th>Numero</th><th>Atleta</th><th>Nickname</th><th>Taglia</th><th>Libero</th><th aria-label="Elimina"></th></tr></thead>
             <tbody>
               <tr *ngFor="let maglia of maglieAssegnate">
                 <td>{{ maglia.numero }}</td>
                 <td>{{ maglia.atleta }}</td>
+                <td>{{ maglia.nickname }}</td>
                 <td>{{ maglia.taglia }}</td>
+                <td>{{ maglia.ruolo?.toLowerCase() === 'libero' ? '✓' : '' }}</td>
                 <td class="action-cell">
                   <button class="delete-button" type="button" [disabled]="deletingId === maglia.id"
                     [attr.aria-label]="'Elimina maglia di ' + maglia.atleta"
@@ -116,7 +127,7 @@ interface Giocatore {
                   </button>
                 </td>
               </tr>
-              <tr *ngIf="maglieAssegnate.length === 0"><td colspan="4">Nessuna maglia assegnata</td></tr>
+              <tr *ngIf="maglieAssegnate.length === 0"><td colspan="6">Nessuna maglia assegnata</td></tr>
             </tbody>
           </table>
         </div>
@@ -159,6 +170,8 @@ export class AppComponent implements OnInit {
   atletaScelto = '';
   numeroScelto = '';
   tagliaScelta = '';
+  nicknameScelto = '';
+  ruoloScelto: '' | 'Giocatore' | 'Libero' = '';
   saving = false;
   deletingId: number | null = null;
   messaggio = '';
@@ -197,12 +210,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async salva(atletaSelect: HTMLSelectElement, numeroSelect: HTMLSelectElement, tagliaSelect: HTMLSelectElement): Promise<void> {
+  async salva(atletaSelect: HTMLSelectElement, numeroSelect: HTMLSelectElement, tagliaSelect: HTMLSelectElement, nicknameInput: HTMLInputElement): Promise<void> {
     const atleta = atletaSelect.value;
     const numero = Number(numeroSelect.value);
     const taglia = tagliaSelect.value;
-    if (!atleta || !numeroSelect.value || !taglia) {
-      this.messaggio = 'Seleziona atleta, numero e taglia.';
+    const nickname = nicknameInput.value.trim();
+    const ruolo = this.ruoloScelto;
+    if (!atleta || !numeroSelect.value || !taglia || !nickname || !ruolo) {
+      this.messaggio = 'Compila atleta, numero, taglia, nickname e ruolo.';
       return;
     }
     this.saving = true;
@@ -211,13 +226,16 @@ export class AppComponent implements OnInit {
       const response = await fetch(this.baseUrl + '/giocatori', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ atleta, numero, taglia })
+        body: JSON.stringify({ atleta, numero, taglia, nickname, ruolo })
       });
       if (response.status === 409) throw new Error('Atleta o numero già assegnato. Aggiorna la pagina.');
       if (!response.ok) throw new Error('Salvataggio non riuscito.');
       atletaSelect.value = '';
       numeroSelect.value = '';
       tagliaSelect.value = '';
+      nicknameInput.value = '';
+      this.nicknameScelto = '';
+      this.ruoloScelto = '';
       this.atletaScelto = '';
       this.numeroScelto = '';
       this.tagliaScelta = '';
