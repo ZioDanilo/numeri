@@ -87,7 +87,7 @@ interface Giocatore {
         </label>
         <fieldset class="role-field" [disabled]="loading || !!loadError">
           <legend>Ruolo</legend>
-          <label><input type="radio" name="ruolo" value="Giocatore" [checked]="ruoloScelto === 'Giocatore'" (change)="ruoloScelto = 'Giocatore'"> Giocatore</label>
+          <label><input type="radio" name="ruolo" value="Tecnico" [checked]="ruoloScelto === 'Tecnico'" (change)="ruoloScelto = 'Tecnico'"> Tecnico</label>
           <label><input type="radio" name="ruolo" value="Libero" [checked]="ruoloScelto === 'Libero'" (change)="ruoloScelto = 'Libero'"> Libero</label>
         </fieldset>
       </section>
@@ -171,7 +171,7 @@ export class AppComponent implements OnInit {
   numeroScelto = '';
   tagliaScelta = '';
   nicknameScelto = '';
-  ruoloScelto: '' | 'Giocatore' | 'Libero' = '';
+  ruoloScelto: '' | 'Tecnico' | 'Libero' = '';
   saving = false;
   deletingId: number | null = null;
   messaggio = '';
