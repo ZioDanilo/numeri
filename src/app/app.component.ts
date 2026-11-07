@@ -6,6 +6,7 @@ interface Giocatore {
   atleta: string;
   numero: number | null;
   taglia: string | null;
+  nickname: string | null;
   ruolo: string | null;
 }
 
@@ -22,13 +23,14 @@ interface Giocatore {
           <button type="button" [class.active]="pagina === 'maglie'" (click)="vaiA('maglie')">Scelta maglie</button>
           <button type="button" [class.active]="pagina === 'giocatori'" (click)="vaiA('giocatori')">Giocatori</button>
           <button type="button" [class.active]="pagina === 'risultati'" (click)="vaiA('risultati')">Risultati</button>
+          <button type="button" [class.active]="pagina === 'fotogallery'" (click)="vaiA('fotogallery')">Fotogallery</button>
         </div>
       </nav>
       <header class="site-header">
         <img class="club-logo" src="assets/Logo.png?v=20261009-2" alt="Logo Virtus Volley Versilia">
         <div class="heading">
           <h1>Virtus Volley Versilia</h1>
-          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : pagina === 'giocatori' ? 'Giocatori' : 'La nostra squadra' }}</p>
+          <p>{{ pagina === 'maglie' ? 'Scelta maglie' : pagina === 'risultati' ? 'Risultati' : pagina === 'fotogallery' ? 'Fotogallery' : pagina === 'giocatori' ? 'Giocatori' : 'La nostra squadra' }}</p>
         </div>
       </header>
       <section *ngIf="pagina === 'home'" class="home-landing" aria-label="Benvenuti">
@@ -61,6 +63,7 @@ interface Giocatore {
       <section *ngIf="pagina === 'risultati'" class="home-landing" aria-label="Risultati">
         <div class="home-panel"><span class="home-eyebrow">VIRTUS VOLLEY VERSILIA</span><h2>Risultati</h2><p>Qui troverai i risultati delle partite della squadra. La sezione è in preparazione.</p></div>
       </section>
+      <section *ngIf="pagina === 'fotogallery'" class="home-landing" aria-label="Fotogallery"></section>
       <ng-container *ngIf="pagina === 'maglie'">
       <section class="selectors" aria-label="Scelta maglie">
         <label>Atleta
@@ -69,22 +72,25 @@ interface Giocatore {
             <option *ngFor="let nome of atletiDisponibili" [value]="nome">{{ nome }}</option>
           </select>
         </label>
+        <label class="nickname-field">Nickname
+          <input type="text" name="nickname" #nicknameInput maxlength="100" required [value]="nicknameScelto" (input)="nicknameScelto = nicknameInput.value" [disabled]="loading || !!loadError" placeholder="Inserisci nickname">
+        </label>
         <label>Numero
           <select name="numero" #numeroSelect (change)="numeroScelto = numeroSelect.value" [disabled]="loading || !!loadError">
-            <option value="" selected disabled>Seleziona numero</option>
+            <option value="" selected disabled>Numero</option>
             <option *ngFor="let n of numeriDisponibili" [value]="n">{{ n }}</option>
           </select>
         </label>
         <label>Taglia
           <select name="taglia" #tagliaSelect (change)="tagliaScelta = tagliaSelect.value" [disabled]="loading || !!loadError">
-            <option value="" selected disabled>Seleziona taglia</option>
+            <option value="" selected disabled>Taglia</option>
             <option *ngFor="let t of taglie" [value]="t">{{ t }}</option>
           </select>
         </label>
       </section>
       <div class="save-actions">
-        <button type="button" [disabled]="saving || loading || !!loadError || !atletaScelto || !numeroScelto || !tagliaScelta"
-          (click)="salva(atletaSelect, numeroSelect, tagliaSelect)">
+        <button type="button" [disabled]="saving || loading || !!loadError || !atletaScelto || !numeroScelto || !tagliaScelta || !nicknameScelto.trim()"
+          (click)="salva(atletaSelect, numeroSelect, tagliaSelect, nicknameInput)">
           {{ saving ? 'Salvataggio...' : 'Salva' }}
         </button>
         <p role="status" aria-live="polite">{{ messaggio }}</p>
@@ -98,12 +104,14 @@ interface Giocatore {
         </p>
         <div *ngIf="!loading && !loadError" class="table-scroll">
           <table>
-            <thead><tr><th>Numero</th><th>Atleta</th><th>Taglia</th><th aria-label="Elimina"></th></tr></thead>
+            <thead><tr><th>Numero</th><th>Atleta</th><th>Nickname</th><th>Taglia</th><th>Libero</th><th aria-label="Elimina"></th></tr></thead>
             <tbody>
               <tr *ngFor="let maglia of maglieAssegnate">
                 <td>{{ maglia.numero }}</td>
                 <td>{{ maglia.atleta }}</td>
+                <td>{{ maglia.nickname }}</td>
                 <td>{{ maglia.taglia }}</td>
+                <td>{{ maglia.ruolo?.toLowerCase() === 'libero' ? '✓' : '' }}</td>
                 <td class="action-cell">
                   <button class="delete-button" type="button" [disabled]="deletingId === maglia.id"
                     [attr.aria-label]="'Elimina maglia di ' + maglia.atleta"
@@ -116,7 +124,7 @@ interface Giocatore {
                   </button>
                 </td>
               </tr>
-              <tr *ngIf="maglieAssegnate.length === 0"><td colspan="4">Nessuna maglia assegnata</td></tr>
+              <tr *ngIf="maglieAssegnate.length === 0"><td colspan="6">Nessuna maglia assegnata</td></tr>
             </tbody>
           </table>
         </div>
@@ -127,7 +135,7 @@ interface Giocatore {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' = 'home';
+  pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' | 'fotogallery' = 'home';
   menuAperto = false;
   giocatoreGirato: string | null = null;
   selezionaGiocatore(nome: string): void {
@@ -135,7 +143,7 @@ export class AppComponent implements OnInit {
       this.giocatoreGirato = this.giocatoreGirato === nome ? null : nome;
     }
   }
-  vaiA(pagina: 'home' | 'maglie' | 'giocatori' | 'risultati'): void {
+  vaiA(pagina: 'home' | 'maglie' | 'giocatori' | 'risultati' | 'fotogallery'): void {
     this.giocatoreGirato = null;
     this.pagina = pagina;
     this.menuAperto = false;
@@ -159,6 +167,7 @@ export class AppComponent implements OnInit {
   atletaScelto = '';
   numeroScelto = '';
   tagliaScelta = '';
+  nicknameScelto = '';
   saving = false;
   deletingId: number | null = null;
   messaggio = '';
@@ -197,12 +206,13 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async salva(atletaSelect: HTMLSelectElement, numeroSelect: HTMLSelectElement, tagliaSelect: HTMLSelectElement): Promise<void> {
+  async salva(atletaSelect: HTMLSelectElement, numeroSelect: HTMLSelectElement, tagliaSelect: HTMLSelectElement, nicknameInput: HTMLInputElement): Promise<void> {
     const atleta = atletaSelect.value;
     const numero = Number(numeroSelect.value);
     const taglia = tagliaSelect.value;
-    if (!atleta || !numeroSelect.value || !taglia) {
-      this.messaggio = 'Seleziona atleta, numero e taglia.';
+    const nickname = nicknameInput.value.trim();
+    if (!atleta || !numeroSelect.value || !taglia || !nickname) {
+      this.messaggio = 'Compila atleta, nickname, numero e taglia.';
       return;
     }
     this.saving = true;
@@ -211,13 +221,15 @@ export class AppComponent implements OnInit {
       const response = await fetch(this.baseUrl + '/giocatori', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ atleta, numero, taglia })
+        body: JSON.stringify({ atleta, numero, taglia, nickname })
       });
       if (response.status === 409) throw new Error('Atleta o numero già assegnato. Aggiorna la pagina.');
       if (!response.ok) throw new Error('Salvataggio non riuscito.');
       atletaSelect.value = '';
       numeroSelect.value = '';
       tagliaSelect.value = '';
+      nicknameInput.value = '';
+      this.nicknameScelto = '';
       this.atletaScelto = '';
       this.numeroScelto = '';
       this.tagliaScelta = '';
