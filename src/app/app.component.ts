@@ -70,29 +70,24 @@ interface Giocatore {
             <option *ngFor="let nome of atletiDisponibili" [value]="nome">{{ nome }}</option>
           </select>
         </label>
+        <label class="nickname-field">Nickname
+          <input type="text" name="nickname" #nicknameInput maxlength="100" required [value]="nicknameScelto" (input)="nicknameScelto = nicknameInput.value" [disabled]="loading || !!loadError" placeholder="Inserisci nickname">
+        </label>
         <label>Numero
           <select name="numero" #numeroSelect (change)="numeroScelto = numeroSelect.value" [disabled]="loading || !!loadError">
-            <option value="" selected disabled>Seleziona numero</option>
+            <option value="" selected disabled>Numero</option>
             <option *ngFor="let n of numeriDisponibili" [value]="n">{{ n }}</option>
           </select>
         </label>
         <label>Taglia
           <select name="taglia" #tagliaSelect (change)="tagliaScelta = tagliaSelect.value" [disabled]="loading || !!loadError">
-            <option value="" selected disabled>Seleziona taglia</option>
+            <option value="" selected disabled>Taglia</option>
             <option *ngFor="let t of taglie" [value]="t">{{ t }}</option>
           </select>
         </label>
-        <label class="nickname-field">Nickname
-          <input type="text" name="nickname" #nicknameInput maxlength="100" required [value]="nicknameScelto" (input)="nicknameScelto = nicknameInput.value" [disabled]="loading || !!loadError" placeholder="Inserisci nickname">
-        </label>
-        <fieldset class="role-field" [disabled]="loading || !!loadError">
-          <legend>Ruolo</legend>
-          <label><input type="radio" name="ruolo" value="Tecnico" [checked]="ruoloScelto === 'Tecnico'" (change)="ruoloScelto = 'Tecnico'"> Tecnico</label>
-          <label><input type="radio" name="ruolo" value="Libero" [checked]="ruoloScelto === 'Libero'" (change)="ruoloScelto = 'Libero'"> Libero</label>
-        </fieldset>
       </section>
       <div class="save-actions">
-        <button type="button" [disabled]="saving || loading || !!loadError || !atletaScelto || !numeroScelto || !tagliaScelta || !nicknameScelto.trim() || !ruoloScelto"
+        <button type="button" [disabled]="saving || loading || !!loadError || !atletaScelto || !numeroScelto || !tagliaScelta || !nicknameScelto.trim()"
           (click)="salva(atletaSelect, numeroSelect, tagliaSelect, nicknameInput)">
           {{ saving ? 'Salvataggio...' : 'Salva' }}
         </button>
@@ -171,7 +166,6 @@ export class AppComponent implements OnInit {
   numeroScelto = '';
   tagliaScelta = '';
   nicknameScelto = '';
-  ruoloScelto: '' | 'Tecnico' | 'Libero' = '';
   saving = false;
   deletingId: number | null = null;
   messaggio = '';
@@ -215,9 +209,8 @@ export class AppComponent implements OnInit {
     const numero = Number(numeroSelect.value);
     const taglia = tagliaSelect.value;
     const nickname = nicknameInput.value.trim();
-    const ruolo = this.ruoloScelto;
-    if (!atleta || !numeroSelect.value || !taglia || !nickname || !ruolo) {
-      this.messaggio = 'Compila atleta, numero, taglia, nickname e ruolo.';
+    if (!atleta || !numeroSelect.value || !taglia || !nickname) {
+      this.messaggio = 'Compila atleta, nickname, numero e taglia.';
       return;
     }
     this.saving = true;
@@ -226,7 +219,7 @@ export class AppComponent implements OnInit {
       const response = await fetch(this.baseUrl + '/giocatori', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ atleta, numero, taglia, nickname, ruolo })
+        body: JSON.stringify({ atleta, numero, taglia, nickname })
       });
       if (response.status === 409) throw new Error('Atleta o numero già assegnato. Aggiorna la pagina.');
       if (!response.ok) throw new Error('Salvataggio non riuscito.');
@@ -235,7 +228,6 @@ export class AppComponent implements OnInit {
       tagliaSelect.value = '';
       nicknameInput.value = '';
       this.nicknameScelto = '';
-      this.ruoloScelto = '';
       this.atletaScelto = '';
       this.numeroScelto = '';
       this.tagliaScelta = '';
