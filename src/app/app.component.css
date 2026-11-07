@@ -361,3 +361,27 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .selectors .role-field { padding: 4px; gap: 2px; flex-wrap: wrap; }
   .selectors .role-field label { font-size: 12px; }
 }
+
+/* Ruolo: sfondo bianco, titolo centrato nell'intera area. */
+.selectors .role-field {
+  position: relative;
+  background: #fff;
+  justify-content: center;
+  align-content: center;
+  column-gap: clamp(5px, 1.1vw, 15px);
+}
+.selectors .role-field legend {
+  float: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.selectors .role-field label { justify-content: center; text-align: center; }
+/* Intestazione coerente con il blu delle voci attive della navbar. */
+.results thead th {
+  background: #0a285b;
+  color: #fff;
+  border-color: #0a285b;
+}
