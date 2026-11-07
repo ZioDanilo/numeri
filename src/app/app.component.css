@@ -325,3 +325,39 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .players-panel .player-card.card-selected .shirt-flipper,
   .players-panel .player-card.card-selected:hover .shirt-flipper { transform: rotateY(0deg); }
 }
+
+/* Scelta maglie: tre colonne uguali, nickname su due colonne e ruolo sulla terza. */
+.selectors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 18px;
+  max-width: 900px;
+  align-items: end;
+}
+.selectors > label { box-sizing: border-box; min-width: 0; width: 100%; max-width: none; flex: none; }
+.selectors .nickname-field { grid-column: span 2; }
+.selectors .nickname-field input {
+  box-sizing: border-box; width: 100%; min-height: 46px; padding: 10px 12px;
+  border: 1px solid #bca77c; border-radius: 9px; background: rgba(255,255,255,.94);
+  color: #171717; font: 16px Arial, sans-serif;
+}
+.selectors .role-field {
+  box-sizing: border-box; min-width: 0; width: 100%; min-height: 75px;
+  margin: 0; padding: 5px 10px 8px; border: 1px solid #bca77c; border-radius: 9px;
+  display: flex; align-items: center; justify-content: space-around; gap: 6px;
+}
+.selectors .role-field legend { font: 700 15px Arial, sans-serif; padding: 0 4px; }
+.selectors .role-field label { display: inline-flex; flex: none; align-items: center; gap: 4px; max-width: none; width: auto; font: 14px Arial, sans-serif; }
+.selectors .role-field input { accent-color: #b8944e; }
+.selectors .nickname-field input:focus-visible { outline: 3px solid #b48b42; outline-offset: 2px; }
+.results table { table-layout: auto; min-width: 610px; }
+.results th, .results td { width: auto !important; }
+.results .action-cell { width: 58px !important; }
+@media (max-width: 600px) {
+  .selectors { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .selectors > label { flex-basis: auto; }
+  .selectors select { min-width: 0; padding: 8px 4px; font-size: 13px; }
+  .selectors .nickname-field input { font-size: 14px; }
+  .selectors .role-field { padding: 4px; gap: 2px; flex-wrap: wrap; }
+  .selectors .role-field label { font-size: 12px; }
+}
