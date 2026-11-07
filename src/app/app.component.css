@@ -385,3 +385,22 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   color: #fff;
   border-color: #0a285b;
 }
+
+/* Scelta maglie: unica riga, atleta 40%, nickname 40%, numero 10%, taglia 10%.
+   Le percentuali si applicano allo spazio netto, esclusi i gap. */
+.selectors {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+.selectors .nickname-field { grid-column: auto; }
+.selectors > label { min-width: 0; max-width: none; }
+.selectors select, .selectors .nickname-field input { width: 100%; min-width: 0; }
+@media (max-width: 600px) {
+  .selectors {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 5px;
+  }
+  .selectors > label { font-size: 12px; }
+  .selectors select { font-size: 12px; padding: 6px 2px; }
+  .selectors .nickname-field input { font-size: 12px; padding: 6px 4px; }
+}
