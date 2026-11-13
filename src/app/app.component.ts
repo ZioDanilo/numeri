@@ -7,6 +7,7 @@ interface Giocatore {
   numero: number | null;
   taglia: string | null;
   nickname: string | null;
+  pantaloncini: string | null;
   ruolo: string | null;
 }
 
@@ -104,14 +105,23 @@ interface Giocatore {
         </p>
         <div *ngIf="!loading && !loadError" class="table-scroll">
           <table>
-            <thead><tr><th>Numero</th><th>Atleta</th><th>Nickname</th><th>Taglia</th><th>Libero</th><th aria-label="Elimina"></th></tr></thead>
+            <thead><tr><th>Numero</th><th>Atleta</th><th>Nickname</th><th>Taglia</th><th>Pantaloncini</th><th aria-label="Elimina"></th></tr></thead>
             <tbody>
               <tr *ngFor="let maglia of maglieAssegnate">
                 <td>{{ maglia.numero }}</td>
                 <td>{{ maglia.atleta }}</td>
                 <td>{{ maglia.nickname }}</td>
                 <td>{{ maglia.taglia }}</td>
-                <td>{{ maglia.ruolo?.toLowerCase() === 'libero' ? '✓' : '' }}</td>
+                <td class="shorts-cell">
+                  <span *ngIf="maglia.pantaloncini" class="shorts-value">{{ maglia.pantaloncini }}</span>
+                  <select *ngIf="!maglia.pantaloncini" #pantalonciniSelect
+                    [attr.aria-label]="'Taglia pantaloncini di ' + maglia.atleta"
+                    [disabled]="savingPantalonciniId === maglia.id || deletingId === maglia.id"
+                    (change)="salvaPantaloncini(maglia, pantalonciniSelect)">
+                    <option value="" selected disabled>Taglia</option>
+                    <option *ngFor="let t of taglie" [value]="t">{{ t }}</option>
+                  </select>
+                </td>
                 <td class="action-cell">
                   <button class="delete-button" type="button" [disabled]="deletingId === maglia.id"
                     [attr.aria-label]="'Elimina maglia di ' + maglia.atleta"
@@ -170,6 +180,7 @@ export class AppComponent implements OnInit {
   nicknameScelto = '';
   saving = false;
   deletingId: number | null = null;
+  savingPantalonciniId: number | null = null;
   messaggio = '';
 
   private readonly baseUrl = /^(localhost|127\\.0\\.0\\.1|10\\.\\d+\\.\\d+\\.\\d+|192\\.168\\.\\d+\\.\\d+|172\\.(1[6-9]|2\\d|3[01])\\.\\d+\\.\\d+)$/.test(location.hostname)
@@ -240,6 +251,29 @@ export class AppComponent implements OnInit {
       await this.caricaMaglie();
     } finally {
       this.saving = false;
+    }
+  }
+
+  async salvaPantaloncini(maglia: Giocatore, select: HTMLSelectElement): Promise<void> {
+    const pantaloncini = select.value;
+    if (!this.taglie.includes(pantaloncini) || this.savingPantalonciniId !== null) return;
+    this.savingPantalonciniId = maglia.id;
+    this.messaggio = '';
+    try {
+      const response = await fetch(this.baseUrl + '/giocatori/' + maglia.id + '/pantaloncini', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pantaloncini })
+      });
+      if (!response.ok) throw new Error('Aggiornamento pantaloncini non riuscito.');
+      const aggiornato = await response.json() as Giocatore;
+      this.maglie = this.maglie.map(m => m.id === maglia.id ? { ...m, pantaloncini: aggiornato.pantaloncini } : m);
+      this.messaggio = 'Taglia pantaloncini salvata.';
+    } catch (error) {
+      select.value = '';
+      this.messaggio = error instanceof Error ? error.message : 'Aggiornamento pantaloncini non riuscito.';
+    } finally {
+      this.savingPantalonciniId = null;
     }
   }
 
