@@ -404,3 +404,20 @@ h1 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 4.5rem)/1.1 Arial, sans-serif; le
   .selectors select { font-size: 12px; padding: 6px 2px; }
   .selectors .nickname-field input { font-size: 12px; padding: 6px 4px; }
 }
+
+/* Taglia pantaloncini: selezione per riga e valore statico dopo il salvataggio. */
+.results .shorts-cell select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 72px;
+  max-width: 125px;
+  padding: 8px 6px;
+  border: 1px solid #bca77c;
+  border-radius: 7px;
+  background: #fff;
+  color: #171717;
+  font: inherit;
+  cursor: pointer;
+}
+.results .shorts-cell select:disabled { opacity: .6; cursor: wait; }
+.results .shorts-value { display: inline-block; font-weight: 700; }
