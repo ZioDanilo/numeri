@@ -160,7 +160,7 @@ export class AppComponent implements OnInit {
     return this.ruoloGiocatore(nome).toLocaleLowerCase('it') === 'libero';
   }
   numeri = Array.from({ length: 99 }, (_, i) => i + 1);
-  taglie = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+  taglie = ['S', 'M', 'L', 'XL', 'XXL'];
   maglie: Giocatore[] = [];
   loading = true;
   loadError = '';
